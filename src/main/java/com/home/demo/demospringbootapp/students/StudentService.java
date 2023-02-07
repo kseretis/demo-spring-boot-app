@@ -2,6 +2,7 @@ package com.home.demo.demospringbootapp.students;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,11 +20,17 @@ public class StudentService {
 	public List<Student> getAllStudents(){
 		List<Student> students = new ArrayList<>();
 		studentRepository.findAll().forEach(students::add);
-		logger.info("Students: {}", students);
 		return students;
 	}
 	
 	public void addStudent(Student student) {
+		studentRepository.save(student);
+	}
+	
+	public void updateStudent(Integer id, Student student) {
+		Optional<Student> studentById = studentRepository.findById(id);
+		logger.info("find by id student --> {}", studentById.toString());
+		student.setId(studentById.get().getId());
 		studentRepository.save(student);
 	}
 
