@@ -33,5 +33,25 @@ public class StudentService {
 		student.setId(studentById.get().getId());
 		studentRepository.save(student);
 	}
-
+	
+	public List<Student> getStudentsByFirstName(String firstName){
+		return studentRepository.findByFirstName(firstName);
+	}
+	
+	public List<Student> getStudentsByLastName(String lastName){
+		return studentRepository.findByLastName(lastName);
+	}
+	
+	public List<Student> getStudentsByAge(int age){
+		return studentRepository.findByAge(age);
+	}
+	
+	public List<Student> getStudentsByClassYear(String classYear){
+		return studentRepository.findByClassYear(classYear);
+	}
+	
+	public List<Student> getStudentsByGrade(double grade){
+		return studentRepository.findByGrade(grade);
+	}
+	
 }

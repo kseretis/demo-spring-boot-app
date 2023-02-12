@@ -15,7 +15,7 @@ public class Student {
 	private String firstName;
 	private String lastName;
 	private int age;
-	private String class_year;
+	private String classYear;
 	private double grade;
 	
 	public Student() {}
@@ -24,7 +24,7 @@ public class Student {
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.age = age;
-		this.class_year = class_year;
+		this.classYear = class_year;
 		this.grade = grade;
 	}
 
@@ -61,11 +61,11 @@ public class Student {
 	}
 
 	public String getClass_year() {
-		return class_year;
+		return classYear;
 	}
 
 	public void setClass_year(String class_year) {
-		this.class_year = class_year;
+		this.classYear = class_year;
 	}
 
 	public double getGrade() {
@@ -79,7 +79,7 @@ public class Student {
 	@Override
 	public String toString() {
 		return "Student [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", age=" + age
-				+ ", class_year=" + class_year + ", grade=" + grade + "]";
+				+ ", class_year=" + classYear + ", grade=" + grade + "]";
 	}
 	
 }
