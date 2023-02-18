@@ -1,7 +1,13 @@
 package com.home.demo.demospringbootapp.students;
 
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,6 +20,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class StudentController {
+	
+	Logger logger = LoggerFactory.getLogger(StudentController.class);
 	
 	@Autowired
 	private StudentService studentService;
@@ -33,7 +41,7 @@ public class StudentController {
 	
 	// Put/Update student
 	@PutMapping("/students/{id}")
-	public void updateStudent(@PathVariable Integer id,@RequestBody Student student) {
+	public void updateStudent(@PathVariable UUID id,@RequestBody Student student) {
 		studentService.updateStudent(id, student);
 	}
 
@@ -50,9 +58,9 @@ public class StudentController {
 	}
 	
 	// Get students by age
-	@GetMapping("/students/age/{age}")
-	public List<Student> getStudentsByAge(@PathVariable int age){
-		return studentService.getStudentsByAge(age);
+	@GetMapping("/students/dateofbirth/{dateofbirth}")
+	public List<Student> getStudentsByAge(@PathVariable LocalDate dateobirth){
+		return studentService.getStudentsByDateOfBirth(dateobirth);
 	}
 	
 	// Get students by class year
@@ -65,6 +73,11 @@ public class StudentController {
 	@GetMapping("/students/grade/{grade}")
 	public List<Student> getStudentsByGrade(@PathVariable double grade){
 		return studentService.getStudentsByGrade(grade);
+	}
+	
+	@GetMapping("/student/join")
+	public List<Student> getJoin() {
+		return studentService.getTest();
 	}
 
 }

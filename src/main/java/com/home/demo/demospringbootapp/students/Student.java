@@ -1,9 +1,18 @@
 package com.home.demo.demospringbootapp.students;
 
+import java.time.LocalDate;
+import java.util.Date;
+import java.util.UUID;
+
+import com.home.demo.demospringbootapp.courses.Course;
+
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -11,30 +20,61 @@ import jakarta.persistence.Table;
 public class Student {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
+	private UUID studentId;
 	private String firstName;
 	private String lastName;
-	private int age;
+	private LocalDate dateOfBirth;
 	private String classYear;
 	private double grade;
+	private UUID supervisorId;
+	
+	@OneToOne(fetch = FetchType.LAZY)
+	@JoinColumn(referencedColumnName = "courseId")
+	private Course course;
 	
 	public Student() {}
 	
-	public Student(String firstName, String lastName, int age, String class_year, double grade) {
+	public Student(String firstName, String lastName, LocalDate dateOfBirth, String class_year, double grade) {
 		this.firstName = firstName;
 		this.lastName = lastName;
-		this.age = age;
+		this.dateOfBirth = dateOfBirth;
 		this.classYear = class_year;
 		this.grade = grade;
 	}
 
-	public int getId() {
-		return id;
+	public UUID getStudentId() {
+		return studentId;
 	}
 
-	public void setId(int id) {
-		this.id = id;
+	public void setStudentId(UUID studentId) {
+		this.studentId = studentId;
 	}
+
+	public LocalDate getDateOfBirth() {
+		return dateOfBirth;
+	}
+
+	public void setDateOfBirth(LocalDate dateOfBirth) {
+		this.dateOfBirth = dateOfBirth;
+	}
+
+	public String getClassYear() {
+		return classYear;
+	}
+
+	public void setClassYear(String classYear) {
+		this.classYear = classYear;
+	}
+
+	public UUID getSupervisorId() {
+		return supervisorId;
+	}
+
+	public void setSupervisorId(UUID supervisorId) {
+		this.supervisorId = supervisorId;
+	}
+
+
 
 	public String getFirstName() {
 		return firstName;
@@ -52,22 +92,6 @@ public class Student {
 		this.lastName = lastName;
 	}
 
-	public int getAge() {
-		return age;
-	}
-
-	public void setAge(int age) {
-		this.age = age;
-	}
-
-	public String getClass_year() {
-		return classYear;
-	}
-
-	public void setClass_year(String class_year) {
-		this.classYear = class_year;
-	}
-
 	public double getGrade() {
 		return grade;
 	}
@@ -78,8 +102,9 @@ public class Student {
 
 	@Override
 	public String toString() {
-		return "Student [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", age=" + age
-				+ ", class_year=" + classYear + ", grade=" + grade + "]";
+		return "Student [studentId=" + studentId + ", firstName=" + firstName + ", lastName=" + lastName
+				+ ", dateOfBirth=" + dateOfBirth + ", classYear=" + classYear + ", grade=" + grade + ", supervisorId="
+				+ supervisorId;
 	}
 	
 }

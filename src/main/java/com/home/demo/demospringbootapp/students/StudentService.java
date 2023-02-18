@@ -1,8 +1,11 @@
 package com.home.demo.demospringbootapp.students;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,11 +30,11 @@ public class StudentService {
 		studentRepository.save(student);
 	}
 	
-	public void updateStudent(Integer id, Student student) {
-		Optional<Student> studentById = studentRepository.findById(id);
-		logger.info("find by id student --> {}", studentById.toString());
-		student.setId(studentById.get().getId());
-		studentRepository.save(student);
+	public void updateStudent(UUID studentId, Student updatedStudent) {
+		Optional<Student> student = studentRepository.findById(studentId);
+		logger.info("find by id student --> {}", student.toString());
+		updatedStudent.setStudentId(student.get().getStudentId());
+		studentRepository.save(updatedStudent);
 	}
 	
 	public List<Student> getStudentsByFirstName(String firstName){
@@ -42,8 +45,8 @@ public class StudentService {
 		return studentRepository.findByLastName(lastName);
 	}
 	
-	public List<Student> getStudentsByAge(int age){
-		return studentRepository.findByAge(age);
+	public List<Student> getStudentsByDateOfBirth(LocalDate dateOfBirth){
+		return studentRepository.findByDateOfBirth(dateOfBirth);
 	}
 	
 	public List<Student> getStudentsByClassYear(String classYear){
@@ -52,6 +55,10 @@ public class StudentService {
 	
 	public List<Student> getStudentsByGrade(double grade){
 		return studentRepository.findByGrade(grade);
+	}
+	
+	public List<Student> getTest() {
+		return studentRepository.findAllandJoin();
 	}
 	
 }
