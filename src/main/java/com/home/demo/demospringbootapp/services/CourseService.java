@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.home.demo.demospringbootapp.entities.Course;
+import com.home.demo.demospringbootapp.dto.CourseDto;
 import com.home.demo.demospringbootapp.repositories.CourseRepository;
 
 @Service
@@ -16,26 +17,8 @@ public class CourseService {
 	@Autowired
 	private CourseRepository courseRepository;
 
-	public List<Course> getCourses() {
-		List<Course> courses = new ArrayList<>();
-		courseRepository.findAll().forEach(courses::add);
-		return courses;
-	}
-	
-	public Course getCourse(UUID courseId) {
-		return courseRepository.findById(courseId).get();
-	}
-	
-	public List<Course> getCoursesByName(String name){
-		return courseRepository.findByCourseName(name);
-	}
-	
-	public void addCourse(Course course) {
-		courseRepository.save(course);
-	}
-	
-	public void udpateCourse(UUID courseId, Course course) {
-		course.setCourseID(courseId);
-		courseRepository.save(course);
+	public List<CourseDto> getCourses() {
+		return null;
+//		return courseRepository.fetchCoursesAndProfessorNames();
 	}
 }

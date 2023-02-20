@@ -2,9 +2,11 @@ package com.home.demo.demospringbootapp.entities;
 
 import java.util.UUID;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
@@ -17,10 +19,10 @@ public class Course {
 	private String courseName;
 	private int coveredSeats;
 	private int maxStudents;
-	private UUID professorId;
 	
-//	@OneToOne(mappedBy = "course")
-//	private Student students;
+	@OneToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "professor_id", referencedColumnName = "professorId")
+	private Professor professor;
 	
 	public Course() {}
 	
@@ -61,15 +63,6 @@ public class Course {
 	public void setMaxStudents(int maxStudents) {
 		this.maxStudents = maxStudents;
 	}
-
-	public UUID getProfessorId() {
-		return professorId;
-	}
-
-	public void setProfessorId(UUID professorId) {
-		this.professorId = professorId;
-	}
-
 
 	
 }

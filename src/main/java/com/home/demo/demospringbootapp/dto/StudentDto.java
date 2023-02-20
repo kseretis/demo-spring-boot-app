@@ -1,4 +1,4 @@
-package com.home.demo.demospringbootapp.models;
+package com.home.demo.demospringbootapp.dto;
 
 import java.time.LocalDate;
 import java.util.UUID;
@@ -99,6 +99,14 @@ public class StudentDto {
 
 	public void setSupervisorLastName(String supervisorLastName) {
 		this.supervisorLastName = supervisorLastName;
+	}
+
+	@Override
+	public String toString() {
+		return "StudentDto [studentId=" + studentId + ", firstName=" + firstName + ", lastName=" + lastName
+				+ ", dateOfBirth=" + dateOfBirth + ", classYear=" + classYear + ", grade=" + grade + ", supervisorId="
+				+ supervisorId + ", supervisorFirstName=" + supervisorFirstName + ", supervisorLastName="
+				+ supervisorLastName + "]";
 	}
 
 }
