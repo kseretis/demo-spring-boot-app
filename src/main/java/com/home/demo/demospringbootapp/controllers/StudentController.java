@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.home.demo.demospringbootapp.entities.Student;
+import com.home.demo.demospringbootapp.models.StudentDto;
 import com.home.demo.demospringbootapp.services.StudentService;
 
 @RestController
@@ -31,56 +32,55 @@ public class StudentController {
 
 	// Get all student
 	@GetMapping("/students")
-	public List<Student> getAllStudents(@RequestParam Map<String, String> params){
-		logger.info("params: {}", params.toString());
+	public List<Student> getAllStudents(){
 		return studentService.getAllStudents();
 	}
-	
-	// Post new student
-	@PostMapping("/students")
-	public void addStudent(@RequestBody Student student) {
-		studentService.addStudent(student);
-	}
-	
-	// Put/Update student
-	@PutMapping("/students/{id}")
-	public void updateStudent(@PathVariable UUID id,@RequestBody Student student) {
-		studentService.updateStudent(id, student);
-	}
-
-	// Get students by first name
-	@GetMapping("/students/firstname/{firstname}")
-	public List<Student> getStudentsByFirstName(@PathVariable String firstname){
-		return studentService.getStudentsByFirstName(firstname);
-	}
-	
-	// Get students by last name
-	@GetMapping("/students/lastname/{lastname}")
-	public List<Student> getStudentsByLastName(@PathVariable String lastname){
-		return studentService.getStudentsByLastName(lastname);
-	}
-	
-	// Get students by age
-	@GetMapping("/students/dateofbirth/{dateofbirth}")
-	public List<Student> getStudentsByAge(@PathVariable LocalDate dateobirth){
-		return studentService.getStudentsByDateOfBirth(dateobirth);
-	}
-	
-	// Get students by class year
-	@GetMapping("/students/classyear/{classyear}")
-	public List<Student> getStudentsByClassYear(@PathVariable String classyear){
-		return studentService.getStudentsByClassYear(classyear);
-	}
-	
-	// Get students by grade
-	@GetMapping("/students/grade/{grade}")
-	public List<Student> getStudentsByGrade(@PathVariable double grade){
-		return studentService.getStudentsByGrade(grade);
-	}
-	
-//	@GetMapping("/student/join")
-//	public List<StudentJoinCourse> getJoin() {
-//		return studentService.getStudentsAndCourse();
+//	
+//	// Post new student
+//	@PostMapping("/students")
+//	public void addStudent(@RequestBody Student student) {
+//		studentService.addStudent(student);
 //	}
+//	
+//	// Put/Update student
+//	@PutMapping("/students/{id}")
+//	public void updateStudent(@PathVariable UUID id,@RequestBody Student student) {
+//		studentService.updateStudent(id, student);
+//	}
+//
+//	// Get students by first name
+//	@GetMapping("/students/firstname/{firstname}")
+//	public List<Student> getStudentsByFirstName(@PathVariable String firstname){
+//		return studentService.getStudentsByFirstName(firstname);
+//	}
+//	
+//	// Get students by last name
+//	@GetMapping("/students/lastname/{lastname}")
+//	public List<Student> getStudentsByLastName(@PathVariable String lastname){
+//		return studentService.getStudentsByLastName(lastname);
+//	}
+//	
+//	// Get students by age
+//	@GetMapping("/students/dateofbirth/{dateofbirth}")
+//	public List<Student> getStudentsByAge(@PathVariable LocalDate dateobirth){
+//		return studentService.getStudentsByDateOfBirth(dateobirth);
+//	}
+//	
+//	// Get students by class year
+//	@GetMapping("/students/classyear/{classyear}")
+//	public List<Student> getStudentsByClassYear(@PathVariable String classyear){
+//		return studentService.getStudentsByClassYear(classyear);
+//	}
+//	
+//	// Get students by grade
+//	@GetMapping("/students/grade/{grade}")
+//	public List<Student> getStudentsByGrade(@PathVariable double grade){
+//		return studentService.getStudentsByGrade(grade);
+//	}
+	
+	@GetMapping("/studentsdto")
+	public List<StudentDto> getStudentsDto(){
+		return studentService.getStudentsDto();
+	}
 
 }

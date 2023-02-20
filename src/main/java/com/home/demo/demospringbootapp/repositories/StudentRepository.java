@@ -10,6 +10,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
 import com.home.demo.demospringbootapp.entities.Student;
+import com.home.demo.demospringbootapp.models.StudentDto;
 
 public interface StudentRepository extends JpaRepository<Student, UUID>{
 
@@ -20,9 +21,11 @@ public interface StudentRepository extends JpaRepository<Student, UUID>{
 	public List<Student> findByClassYear(String classYear);
 	public List<Student> findByGrade(double grade);
 	
-//	@Query("SELECT new com.home.demo.demospringbootapp.joins.StudentJoinCourse(s.firstName, s.lastName, s.grade, c.courseName) "
-//			+ " FROM Student s LEFT JOIN s.course c")
-//	public List<StudentJoinCourse> fetchStudentJoinCourse();
+	@Query("SELECT new com.home.demo.demospringbootapp.models.StudentDto("
+			+ "s.studentId, s.firstName, s.lastName, s.dateOfBirth, s.classYear, s.grade, "
+			+ "sv.professorId, sv.firstName, sv.lastName) "
+			+ " FROM Student s LEFT JOIN s.supervisor sv")
+	public List<StudentDto> fetchStudentsDto();
 		
 }
 

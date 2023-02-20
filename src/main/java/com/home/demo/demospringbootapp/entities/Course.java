@@ -19,8 +19,8 @@ public class Course {
 	private int maxStudents;
 	private UUID professorId;
 	
-	@OneToOne(mappedBy = "course")
-	private Student students;
+//	@OneToOne(mappedBy = "course")
+//	private Student students;
 	
 	public Course() {}
 	
@@ -70,10 +70,6 @@ public class Course {
 		this.professorId = professorId;
 	}
 
-	@Override
-	public String toString() {
-		return "Course [courseID=" + courseId + ", courseName=" + courseName + ", coveredSeats=" + coveredSeats
-				+ ", maxStudents=" + maxStudents + ", professorId=" + professorId + "]";
-	}
+
 	
 }
