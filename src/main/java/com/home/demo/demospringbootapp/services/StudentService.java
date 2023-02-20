@@ -1,8 +1,7 @@
-package com.home.demo.demospringbootapp.students;
+package com.home.demo.demospringbootapp.services;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -11,6 +10,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.home.demo.demospringbootapp.entities.Student;
+import com.home.demo.demospringbootapp.repositories.StudentRepository;
 
 @Service
 public class StudentService {
@@ -57,8 +59,8 @@ public class StudentService {
 		return studentRepository.findByGrade(grade);
 	}
 	
-	public List<Student> getTest() {
-		return studentRepository.findAllandJoin();
-	}
+//	public List<StudentJoinCourse> getStudentsAndCourse() {
+//		return studentRepository.fetchStudentJoinCourse();
+//	}
 	
 }

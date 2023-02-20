@@ -1,16 +1,11 @@
-package com.home.demo.demospringbootapp.courses;
+package com.home.demo.demospringbootapp.entities;
 
-import java.util.List;
 import java.util.UUID;
-
-import com.home.demo.demospringbootapp.students.Student;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -24,8 +19,8 @@ public class Course {
 	private int maxStudents;
 	private UUID professorId;
 	
-	@OneToMany(mappedBy = "studentId")
-	private List<Student> students;
+	@OneToOne(mappedBy = "course")
+	private Student students;
 	
 	public Course() {}
 	

@@ -1,10 +1,8 @@
-package com.home.demo.demospringbootapp.students;
+package com.home.demo.demospringbootapp.entities;
 
 import java.time.LocalDate;
-import java.util.Date;
+import java.util.List;
 import java.util.UUID;
-
-import com.home.demo.demospringbootapp.courses.Course;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -29,8 +27,10 @@ public class Student {
 	private UUID supervisorId;
 	
 	@OneToOne(fetch = FetchType.LAZY)
-	@JoinColumn(referencedColumnName = "courseId")
+	@JoinColumn(name = "course_id", referencedColumnName = "courseId")
 	private Course course;
+	
+	private List<String> courses;
 	
 	public Student() {}
 	
@@ -74,8 +74,6 @@ public class Student {
 		this.supervisorId = supervisorId;
 	}
 
-
-
 	public String getFirstName() {
 		return firstName;
 	}
@@ -99,12 +97,21 @@ public class Student {
 	public void setGrade(double grade) {
 		this.grade = grade;
 	}
+	
+
+	public List<String> getCourses() {
+		return courses;
+	}
+
+	public void setCourses(List<String> courses) {
+		this.courses = courses;
+	}
 
 	@Override
 	public String toString() {
 		return "Student [studentId=" + studentId + ", firstName=" + firstName + ", lastName=" + lastName
 				+ ", dateOfBirth=" + dateOfBirth + ", classYear=" + classYear + ", grade=" + grade + ", supervisorId="
-				+ supervisorId;
+				+ supervisorId + ", course=" + course + ", courses=" + courses + "]";
 	}
 	
 }

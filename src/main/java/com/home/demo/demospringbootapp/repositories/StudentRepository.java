@@ -1,4 +1,4 @@
-package com.home.demo.demospringbootapp.students;
+package com.home.demo.demospringbootapp.repositories;
 
 import java.time.LocalDate;
 import java.util.Date;
@@ -9,7 +9,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
-import com.home.demo.demospringbootapp.joins.StudentJoinCourse;
+import com.home.demo.demospringbootapp.entities.Student;
 
 public interface StudentRepository extends JpaRepository<Student, UUID>{
 
@@ -20,7 +20,9 @@ public interface StudentRepository extends JpaRepository<Student, UUID>{
 	public List<Student> findByClassYear(String classYear);
 	public List<Student> findByGrade(double grade);
 	
-	@Query("SELECT s FROM students s JOIN s.course c")
-	public List<Student> findAllandJoin();
+//	@Query("SELECT new com.home.demo.demospringbootapp.joins.StudentJoinCourse(s.firstName, s.lastName, s.grade, c.courseName) "
+//			+ " FROM Student s LEFT JOIN s.course c")
+//	public List<StudentJoinCourse> fetchStudentJoinCourse();
 		
 }
+

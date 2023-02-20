@@ -1,4 +1,4 @@
-package com.home.demo.demospringbootapp.students;
+package com.home.demo.demospringbootapp.controllers;
 
 import java.time.LocalDate;
 import java.util.Date;
@@ -17,6 +17,9 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.home.demo.demospringbootapp.entities.Student;
+import com.home.demo.demospringbootapp.services.StudentService;
 
 @RestController
 public class StudentController {
@@ -75,9 +78,9 @@ public class StudentController {
 		return studentService.getStudentsByGrade(grade);
 	}
 	
-	@GetMapping("/student/join")
-	public List<Student> getJoin() {
-		return studentService.getTest();
-	}
+//	@GetMapping("/student/join")
+//	public List<StudentJoinCourse> getJoin() {
+//		return studentService.getStudentsAndCourse();
+//	}
 
 }
