@@ -57,5 +57,11 @@ public class Student extends Person{
 	public void setGrade(double grade) {
 		this.grade = grade;
 	}
+
+	@Override
+	public String toString() {
+		return "Student [studentId=" + studentId + ", classYear=" + classYear + ", grade=" + grade + ", supervisor="
+				+ supervisor + "]";
+	}
 	
 }

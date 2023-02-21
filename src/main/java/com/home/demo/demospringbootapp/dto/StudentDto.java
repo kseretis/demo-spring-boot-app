@@ -14,6 +14,12 @@ public class StudentDto {
 	private UUID supervisorId;
 	private String supervisorFirstName;
 	private String supervisorLastName;
+	
+	public StudentDto(UUID supervisorId, String supervisorFirstName, String supervisorLastName) {
+		this.supervisorId = supervisorId;
+		this.supervisorFirstName = supervisorFirstName;
+		this.supervisorLastName = supervisorLastName;
+	}
 
 	public StudentDto(UUID studentId, String firstName, String lastName, LocalDate dateOfBirth, int classYear,
 			double grade, UUID supervisorId, String supervisorFirstName, String supervisorLastName) {
@@ -27,6 +33,12 @@ public class StudentDto {
 		this.supervisorId = supervisorId;
 		this.supervisorFirstName = supervisorFirstName;
 		this.supervisorLastName = supervisorLastName;
+	}
+	
+	public void updateSupervisorInfo(StudentDto studentDto) {
+		this.supervisorId = studentDto.getSupervisorId();
+		this.supervisorFirstName = studentDto.getSupervisorFirstName();
+		this.supervisorLastName = studentDto.getSupervisorLastName();
 	}
 
 	public UUID getStudentId() {
