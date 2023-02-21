@@ -43,8 +43,10 @@ public class StudentDto {
 	}
 
 	public void updateSupervisorInfo(StudentDto studentDto) {
-		this.supervisorId = studentDto.getSupervisorId();
-		this.supervisorName = studentDto.getSupervisor();
+		if (studentDto != null) {
+			supervisorId = studentDto.getSupervisorId();
+			supervisorName = studentDto.getSupervisor();
+		}
 	}
 
 	public UUID getStudentId() {

@@ -32,31 +32,45 @@ public class StudentService {
 		return mapAndUpdateStudentsDto(studentRepository.findAll());
 	}
 	
-	public StudentDto getStudentById(String studentId){
+	public StudentDto getStudentById(String studentId) {
 		StudentDto student = studentRepository.findById(UUID.fromString(studentId)).
 										map(StudentMapper.INSTANCE::toStudentDto).get();
 		student.updateSupervisorInfo(studentDtoRepository.fetchSupervisor(student.getStudentId()));
 		return student;
 	}
 	
-	public List<StudentDto> getStudentsByFirstName(String firstName){
+	public List<StudentDto> getStudentsByFirstName(String firstName) {
 		return mapAndUpdateStudentsDto(studentRepository.findByFirstName(firstName));
 	}
 	
-	public List<StudentDto> getStudentsByLastName(String lastName){
+	public List<StudentDto> getStudentsByLastName(String lastName) {
 		return mapAndUpdateStudentsDto(studentRepository.findByLastName(lastName));
 	}
 	
-	public List<StudentDto> getStudentsByDateOfBirth(String dateOfBirth){
+	public List<StudentDto> getStudentsByDateOfBirth(String dateOfBirth) {
 		return mapAndUpdateStudentsDto(studentRepository.findByDateOfBirth(LocalDate.parse(dateOfBirth)));
 	}
 	
-	public List<StudentDto> getStudentsByClassYear(String classYear){
+	public List<StudentDto> getStudentsByClassYear(String classYear) {
 		return mapAndUpdateStudentsDto(studentRepository.findByClassYear(Integer.parseInt(classYear)));
 	}
 	
-	public List<StudentDto> getStudentsByGrade(String grade){
+	public List<StudentDto> getStudentsByGrade(String grade) {
 		return mapAndUpdateStudentsDto(studentRepository.findByGrade(Double.parseDouble(grade)));
+	}
+	
+	public void addStudent(StudentDto studentDto) {
+		Student newStudent = StudentMapper.INSTANCE.toStudent(studentDto);
+		logger.info("Student mapped: {}", newStudent.toString());
+		studentRepository.save(newStudent);
+		logger.info("Student added: {}", newStudent.toString());
+	}
+	
+	public void updateStudent(UUID id, Student student) {
+		student.setStudentId(studentRepository.findById(id).get().getStudentId());
+		logger.info("Student found: {}", student.toString());
+		studentRepository.save(student);
+		logger.info("Student updated {}", student.toString());
 	}
 	
 	/*

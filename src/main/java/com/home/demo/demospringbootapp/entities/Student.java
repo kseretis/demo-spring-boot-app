@@ -1,13 +1,10 @@
 package com.home.demo.demospringbootapp.entities;
 
-import java.time.LocalDate;
 import java.util.UUID;
-
 import com.home.demo.demospringbootapp.models.Person;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
@@ -18,10 +15,11 @@ import jakarta.persistence.Table;
 public class Student extends Person{
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue
 	private UUID studentId;
 	private int classYear;
 	private double grade;
+//	private UUID supervisorId;
 	
 	@OneToOne
 	@JoinColumn(name = "supervisor_id", referencedColumnName = "professorId")
@@ -29,8 +27,9 @@ public class Student extends Person{
 	
 	public Student() {}
 	
-	public Student(String firstName, String lastName, LocalDate dateOfBirth, int class_year, double grade) {
-		this.classYear = class_year;
+	public Student(int classYear, double grade) {
+		super();
+		this.classYear = classYear;
 		this.grade = grade;
 	}
 
@@ -57,11 +56,20 @@ public class Student extends Person{
 	public void setGrade(double grade) {
 		this.grade = grade;
 	}
+	
+	public Professor getSupervisor() {
+		return supervisor;
+	}
+
+	public void setSupervisor(Professor supervisor) {
+		this.supervisor = supervisor;
+	}
 
 	@Override
 	public String toString() {
 		return "Student [studentId=" + studentId + ", classYear=" + classYear + ", grade=" + grade + ", supervisor="
-				+ supervisor + "]";
+				+ supervisor + ", getSupervisor()=" + getSupervisor() + ", getFirstName()=" + getFirstName()
+				+ ", getLastName()=" + getLastName() + ", getDateOfBirth()=" + getDateOfBirth() + "]";
 	}
 	
 }

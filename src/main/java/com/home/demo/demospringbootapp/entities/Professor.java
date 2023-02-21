@@ -54,7 +54,8 @@ public class Professor extends Person{
 	@Override
 	public String toString() {
 		return "Professor [professorId=" + professorId + ", title=" + title + ", teachingCourses=" + teachingCourses
-				+ "]";
+				+ ", getFirstName()=" + getFirstName() + ", getLastName()=" + getLastName() + ", getDateOfBirth()="
+				+ getDateOfBirth() + "]";
 	}
 
 }
