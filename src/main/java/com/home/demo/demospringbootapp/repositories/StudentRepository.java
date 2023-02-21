@@ -11,10 +11,15 @@ import com.home.demo.demospringbootapp.entities.Student;
 public interface StudentRepository extends JpaRepository<Student, UUID>{
 
 	public Student findByStudentId(UUID studentId);
+	
 	public List<Student> findByFirstName(String firstName);
+	
 	public List<Student> findByLastName(String lastName);
+	
 	public List<Student> findByDateOfBirth(LocalDate dateOfBirth);
+	
 	public List<Student> findByClassYear(int classYear);
+	
 	public List<Student> findByGrade(double grade);
 
 }
