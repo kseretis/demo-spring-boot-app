@@ -14,7 +14,7 @@ import com.home.demo.demospringbootapp.entities.Student;
 public interface StudentDtoRepository extends JpaRepository<Student, UUID>{
 	
 	@Query("SELECT new com.home.demo.demospringbootapp.dto.StudentDto("
-			+ "sv.professorId, sv.firstName, sv.lastName) "
+			+ "sv.professorId, CONCAT(sv.firstName, ' ', sv.lastName)) "
 			+ " FROM Student s INNER JOIN s.supervisor sv WHERE s.studentId = :id")
 	public StudentDto fetchSupervisor(@Param("id") UUID studenId);
 

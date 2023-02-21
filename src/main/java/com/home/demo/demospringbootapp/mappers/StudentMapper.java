@@ -3,8 +3,8 @@ package com.home.demo.demospringbootapp.mappers;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
-import com.home.demo.demospringbootapp.entities.Student;
 import com.home.demo.demospringbootapp.dto.StudentDto;
+import com.home.demo.demospringbootapp.entities.Student;
 
 @Mapper
 public interface StudentMapper {

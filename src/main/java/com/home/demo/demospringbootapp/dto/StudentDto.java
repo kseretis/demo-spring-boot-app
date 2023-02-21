@@ -12,17 +12,17 @@ public class StudentDto {
 	private int classYear;
 	private double grade;
 	private UUID supervisorId;
-	private String supervisorFirstName;
-	private String supervisorLastName;
+	private String supervisorName;
 	
-	public StudentDto(UUID supervisorId, String supervisorFirstName, String supervisorLastName) {
+	public StudentDto() {}
+	
+	public StudentDto(UUID supervisorId, String supervisorName) {
 		this.supervisorId = supervisorId;
-		this.supervisorFirstName = supervisorFirstName;
-		this.supervisorLastName = supervisorLastName;
+		this.supervisorName = supervisorName;
 	}
 
 	public StudentDto(UUID studentId, String firstName, String lastName, LocalDate dateOfBirth, int classYear,
-			double grade, UUID supervisorId, String supervisorFirstName, String supervisorLastName) {
+			double grade, UUID supervisorId, String supervisorName) {
 		super();
 		this.studentId = studentId;
 		this.firstName = firstName;
@@ -31,14 +31,20 @@ public class StudentDto {
 		this.classYear = classYear;
 		this.grade = grade;
 		this.supervisorId = supervisorId;
-		this.supervisorFirstName = supervisorFirstName;
-		this.supervisorLastName = supervisorLastName;
+		this.supervisorName = supervisorName;
 	}
 	
+	public String getSupervisor() {
+		return supervisorName;
+	}
+
+	public void setSupervisor(String supervisor) {
+		this.supervisorName = supervisor;
+	}
+
 	public void updateSupervisorInfo(StudentDto studentDto) {
 		this.supervisorId = studentDto.getSupervisorId();
-		this.supervisorFirstName = studentDto.getSupervisorFirstName();
-		this.supervisorLastName = studentDto.getSupervisorLastName();
+		this.supervisorName = studentDto.getSupervisor();
 	}
 
 	public UUID getStudentId() {
@@ -97,28 +103,11 @@ public class StudentDto {
 		this.supervisorId = supervisorId;
 	}
 
-	public String getSupervisorFirstName() {
-		return supervisorFirstName;
-	}
-
-	public void setSupervisorFirstName(String supervisorFirstName) {
-		this.supervisorFirstName = supervisorFirstName;
-	}
-
-	public String getSupervisorLastName() {
-		return supervisorLastName;
-	}
-
-	public void setSupervisorLastName(String supervisorLastName) {
-		this.supervisorLastName = supervisorLastName;
-	}
-
 	@Override
 	public String toString() {
 		return "StudentDto [studentId=" + studentId + ", firstName=" + firstName + ", lastName=" + lastName
 				+ ", dateOfBirth=" + dateOfBirth + ", classYear=" + classYear + ", grade=" + grade + ", supervisorId="
-				+ supervisorId + ", supervisorFirstName=" + supervisorFirstName + ", supervisorLastName="
-				+ supervisorLastName + "]";
+				+ supervisorId + ", supervisorName=" + supervisorName + "]";
 	}
 
 }
