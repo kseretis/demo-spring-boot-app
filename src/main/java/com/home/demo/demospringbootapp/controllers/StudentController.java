@@ -69,7 +69,7 @@ public class StudentController {
 	}
 	
 	@PutMapping("/{id}")
-	public void updateStudent(@PathVariable String id, @RequestBody Student student) {
+	public void updateStudent(@PathVariable String id, @RequestBody StudentDto student) {
 		studentService.updateStudent(UUID.fromString(id), student);
 	}
 	

@@ -4,6 +4,7 @@ import java.util.UUID;
 import com.home.demo.demospringbootapp.models.Person;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
@@ -21,7 +22,7 @@ public class Student extends Person{
 	private double grade;
 //	private UUID supervisorId;
 	
-	@OneToOne
+	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "supervisor_id", referencedColumnName = "professorId")
 	private Professor supervisor; 
 	
@@ -68,7 +69,9 @@ public class Student extends Person{
 	@Override
 	public String toString() {
 		return "Student [studentId=" + studentId + ", classYear=" + classYear + ", grade=" + grade + ", supervisor="
-				+ supervisor + ", getSupervisor()=" + getSupervisor() + ", getFirstName()=" + getFirstName()
+				+ supervisor + 
+//				", getSupervisorId()=" + supervisor.getProfessorId() + 
+				", getFirstName()=" + getFirstName()
 				+ ", getLastName()=" + getLastName() + ", getDateOfBirth()=" + getDateOfBirth() + "]";
 	}
 	

@@ -34,18 +34,10 @@ public class StudentDto {
 		this.supervisorName = supervisorName;
 	}
 	
-	public String getSupervisor() {
-		return supervisorName;
-	}
-
-	public void setSupervisor(String supervisor) {
-		this.supervisorName = supervisor;
-	}
-
 	public void updateSupervisorInfo(StudentDto studentDto) {
 		if (studentDto != null) {
 			supervisorId = studentDto.getSupervisorId();
-			supervisorName = studentDto.getSupervisor();
+			supervisorName = studentDto.getSupervisorName();
 		}
 	}
 
@@ -105,11 +97,19 @@ public class StudentDto {
 		this.supervisorId = supervisorId;
 	}
 
+	public String getSupervisorName() {
+		return supervisorName;
+	}
+
+	public void setSupervisorName(String supervisorName) {
+		this.supervisorName = supervisorName;
+	}
+
 	@Override
 	public String toString() {
 		return "StudentDto [studentId=" + studentId + ", firstName=" + firstName + ", lastName=" + lastName
 				+ ", dateOfBirth=" + dateOfBirth + ", classYear=" + classYear + ", grade=" + grade + ", supervisorId="
 				+ supervisorId + ", supervisorName=" + supervisorName + "]";
 	}
-
+	
 }

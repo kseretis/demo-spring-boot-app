@@ -35,7 +35,9 @@ public class StudentService {
 	public StudentDto getStudentById(String studentId) {
 		StudentDto student = studentRepository.findById(UUID.fromString(studentId)).
 										map(StudentMapper.INSTANCE::toStudentDto).get();
-		student.updateSupervisorInfo(studentDtoRepository.fetchSupervisor(student.getStudentId()));
+		try {
+			student.updateSupervisorInfo(studentDtoRepository.fetchSupervisor(student.getStudentId()));
+		} catch (NullPointerException ex) {}
 		return student;
 	}
 	
@@ -60,17 +62,25 @@ public class StudentService {
 	}
 	
 	public void addStudent(StudentDto studentDto) {
+		if (studentDto.getSupervisorId() != null) {
+			studentDto.updateSupervisorInfo(studentDtoRepository
+					.fetchProfessor(studentDto.getStudentId()));
+		}
+		logger.info("Student supervisor matched: {}", studentDto.toString());
+		
 		Student newStudent = StudentMapper.INSTANCE.toStudent(studentDto);
 		logger.info("Student mapped: {}", newStudent.toString());
+		
 		studentRepository.save(newStudent);
 		logger.info("Student added: {}", newStudent.toString());
 	}
 	
-	public void updateStudent(UUID id, Student student) {
-		student.setStudentId(studentRepository.findById(id).get().getStudentId());
-		logger.info("Student found: {}", student.toString());
-		studentRepository.save(student);
-		logger.info("Student updated {}", student.toString());
+	public void updateStudent(UUID id, StudentDto studentDto) {
+		studentDto.setStudentId(studentRepository.findById(id).get().getStudentId());
+		logger.info("Student (DTO) found: {}", studentDto.toString());
+		Student updatedStudent = StudentMapper.INSTANCE.toStudent(studentDto);
+		studentRepository.save(updatedStudent);
+		logger.info("Student updated {}", updatedStudent.toString());
 	}
 	
 	/*
@@ -80,13 +90,15 @@ public class StudentService {
 	 *
 	 */
 	public List<StudentDto> mapAndUpdateStudentsDto(List<Student> students){
-		logger.info("before mapping: {}", Arrays.toString(students.toArray()));
+		logger.info("Before mapping: {}", Arrays.toString(students.toArray()));
 		List<StudentDto> studentsDto = students.stream().map(StudentMapper.INSTANCE::toStudentDto).collect(Collectors.toList());
-		logger.info("map: {}", Arrays.toString(studentsDto.toArray()));
+
 		studentsDto.forEach( student -> {
-			student.updateSupervisorInfo(studentDtoRepository.fetchSupervisor(student.getStudentId()));
+			try {
+				student.updateSupervisorInfo(studentDtoRepository.fetchSupervisor(student.getStudentId()));
+			} catch (NullPointerException ex) {}
 		});
-		logger.info("map2: {}", Arrays.toString(studentsDto.toArray()));
+		logger.info("After fetch & map: {}", Arrays.toString(studentsDto.toArray()));
 		return studentsDto;
 	}
 	
