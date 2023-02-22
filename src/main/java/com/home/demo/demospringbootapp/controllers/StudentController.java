@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.home.demo.demospringbootapp.dto.StudentDto;
-import com.home.demo.demospringbootapp.entities.Student;
 import com.home.demo.demospringbootapp.services.StudentService;
 
 @RestController

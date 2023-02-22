@@ -1,6 +1,7 @@
 package com.home.demo.demospringbootapp.entities;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.UUID;
 import com.home.demo.demospringbootapp.models.Person;
 
@@ -10,9 +11,7 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -25,8 +24,8 @@ public class Professor extends Person{
 	private String title;
 	private int teachingCourses;
 	
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	private Student student;
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private List<Student> students;
 	
 	public Professor() {}
 
@@ -60,19 +59,19 @@ public class Professor extends Person{
 		this.teachingCourses = teachingCourses;
 	}
 	
-	public Student getStudent() {
-		return student;
+	public List<Student> getStudents() {
+		return students;
 	}
 
-	public void setStudent(Student student) {
-		this.student = student;
+	public void setStudents(List<Student> students) {
+		this.students = students;
 	}
 
 	@Override
 	public String toString() {
-		return "Professor [professorId=" + professorId + ", title=" + title + ", teachingCourses=" + teachingCourses
-				+ ", getFirstName()=" + getFirstName() + ", getLastName()=" + getLastName() + ", getDateOfBirth()="
-				+ getDateOfBirth() + "]";
+		return "Professor [professorId=" + professorId + ", getFirstName()=" + getFirstName() + ", getLastName()=" + getLastName()
+				+ ", getDateOfBirth()=" + getDateOfBirth() + ", title=" + title + ", teachingCourses=" + teachingCourses
+				+ ", students=" + students + "]";
 	}
 
 }
