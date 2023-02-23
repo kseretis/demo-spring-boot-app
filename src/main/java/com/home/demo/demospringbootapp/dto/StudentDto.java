@@ -3,6 +3,9 @@ package com.home.demo.demospringbootapp.dto;
 import java.time.LocalDate;
 import java.util.UUID;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class StudentDto {
 	
 	private UUID studentId;
@@ -19,6 +22,12 @@ public class StudentDto {
 	public StudentDto(UUID supervisorId, String supervisorName) {
 		this.supervisorId = supervisorId;
 		this.supervisorName = supervisorName;
+	}
+	
+	public StudentDto(UUID studentId, String firstName, String lastName) {
+		this.studentId = studentId;
+		this.firstName = firstName;
+		this.lastName = lastName;
 	}
 
 	public StudentDto(UUID studentId, String firstName, String lastName, LocalDate dateOfBirth, int classYear,

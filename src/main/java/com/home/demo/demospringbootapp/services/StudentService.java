@@ -14,7 +14,6 @@ import org.springframework.stereotype.Service;
 import com.home.demo.demospringbootapp.mappers.StudentMapper;
 import com.home.demo.demospringbootapp.repositories.StudentRepository;
 import com.home.demo.demospringbootapp.dto.StudentDto;
-import com.home.demo.demospringbootapp.dto.repositories.StudentDtoRepository;
 import com.home.demo.demospringbootapp.entities.Student;
 
 @Service
@@ -25,9 +24,6 @@ public class StudentService {
 	@Autowired
 	private StudentRepository studentRepository;
 	
-	@Autowired
-	private StudentDtoRepository studentDtoRepository;
-	
 	public List<StudentDto> getAllStudents(){
 		return mapAndUpdateStudentsDto(studentRepository.findAll());
 	}
@@ -36,7 +32,7 @@ public class StudentService {
 		StudentDto student = studentRepository.findById(UUID.fromString(studentId)).
 										map(StudentMapper.INSTANCE::toStudentDto).get();
 		try {
-			student.updateSupervisorInfo(studentDtoRepository.fetchSupervisor(student.getStudentId()));
+			student.updateSupervisorInfo(studentRepository.fetchSupervisor(student.getStudentId()));
 		} catch (NullPointerException ex) {}
 		return student;
 	}
@@ -63,7 +59,7 @@ public class StudentService {
 	
 	public void addStudent(StudentDto studentDto) {
 		if (studentDto.getSupervisorId() != null) {
-			studentDto.updateSupervisorInfo(studentDtoRepository
+			studentDto.updateSupervisorInfo(studentRepository
 					.fetchProfessor(studentDto.getStudentId()));
 		}
 		logger.info("Student supervisor matched: {}", studentDto.toString());
@@ -95,7 +91,7 @@ public class StudentService {
 
 		studentsDto.forEach( student -> {
 			try {
-				student.updateSupervisorInfo(studentDtoRepository.fetchSupervisor(student.getStudentId()));
+				student.updateSupervisorInfo(studentRepository.fetchSupervisor(student.getStudentId()));
 			} catch (NullPointerException ex) {}
 		});
 		logger.info("After fetch & map: {}", Arrays.toString(studentsDto.toArray()));

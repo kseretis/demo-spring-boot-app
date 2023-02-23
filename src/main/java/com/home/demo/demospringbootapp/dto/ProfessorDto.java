@@ -4,10 +4,12 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.home.demo.demospringbootapp.entities.Course;
 import com.home.demo.demospringbootapp.entities.Student;
 import com.home.demo.demospringbootapp.models.Person;
 
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class ProfessorDto extends Person{
 	
 	private UUID professorId;
@@ -16,11 +18,13 @@ public class ProfessorDto extends Person{
 	
 	//TODO
 	private List<Course> listOfCourses;
-	//TODO
-	private List<Student> listOfSupervisingStudents;
+	
+	private List<StudentDto> listOfSupervisingStudents;
+	
+	public ProfessorDto() {}
 	
 	public ProfessorDto(String firstName, String lastName, LocalDate dateOfbirth, String title,
-			int numberOfTeachingCourses, List<Course> listOfCourses, List<Student> listOfSupervisingStudents) {
+			int numberOfTeachingCourses, List<Course> listOfCourses, List<StudentDto> listOfSupervisingStudents) {
 		super();
 		this.title = title;
 		this.numberOfTeachingCourses = numberOfTeachingCourses;
@@ -60,11 +64,11 @@ public class ProfessorDto extends Person{
 		this.listOfCourses = listOfCourses;
 	}
 
-	public List<Student> getListOfSupervisingStudents() {
+	public List<StudentDto> getListOfSupervisingStudents() {
 		return listOfSupervisingStudents;
 	}
 
-	public void setListOfSupervisingStudents(List<Student> listOfSupervisingStudents) {
+	public void setListOfSupervisingStudents(List<StudentDto> listOfSupervisingStudents) {
 		this.listOfSupervisingStudents = listOfSupervisingStudents;
 	}
 
