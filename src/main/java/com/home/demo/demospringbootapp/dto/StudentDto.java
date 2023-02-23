@@ -24,10 +24,12 @@ public class StudentDto {
 		this.supervisorName = supervisorName;
 	}
 	
-	public StudentDto(UUID studentId, String firstName, String lastName) {
+	public StudentDto(UUID studentId, String firstName, String lastName, int classYear, double grade) {
 		this.studentId = studentId;
 		this.firstName = firstName;
 		this.lastName = lastName;
+		this.classYear = classYear;
+		this.grade = grade;
 	}
 
 	public StudentDto(UUID studentId, String firstName, String lastName, LocalDate dateOfBirth, int classYear,

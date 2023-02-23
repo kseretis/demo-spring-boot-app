@@ -1,57 +1,50 @@
 package com.home.demo.demospringbootapp.controllers;
 
 import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.home.demo.demospringbootapp.dto.ProfessorDto;
-import com.home.demo.demospringbootapp.entities.Professor;
 import com.home.demo.demospringbootapp.services.ProfessorService;
 
 @RestController
 @RequestMapping("/professors")
 public class ProfessorController {
 	
+	private Logger logger = LoggerFactory.getLogger(ProfessorController.class);
+	
 	@Autowired
 	private ProfessorService professorService;
 	
-	@GetMapping("/")
-	public List<ProfessorDto> getAllProfessors(){
-		return professorService.getAllProfessors();
+	@GetMapping(value = {"", "/"})
+	public List<ProfessorDto> getProfessors(@RequestParam Map<String, String> params){
+		return professorService.getProfessors(params);
 	}
 	
-//	@GetMapping("/{id}")
-//	public Professor getProfessorById(@PathVariable String id){
-//		return professorService.getProfessorById(id);
+	@GetMapping(value = {"", "/"}, params = "professorId")
+	public ProfessorDto getProfessors(@RequestParam("professorId") String id){
+		return professorService.getProfessor(UUID.fromString(id));
+	}
+
+//	@PostMapping(value = {"", "/"})
+//	public void addProfessor(@RequestBody ProfessorDto professor) {
+////		professorService.
 //	}
-//	
-//	@GetMapping("/firstname/{firstName}")
-//	public List<Professor> getProfessorsByFirstName(@PathVariable String firstName){
-//		return professorService.getProfessorsByFirstName(firstName);
-//	}
-//	
-//	@GetMapping("/lastname/{lastName}")
-//	public List<Professor> getProfessorsByLastName(@PathVariable String lastName){
-//		return professorService.getProfessorsByLastName(lastName);
-//	}
-//	
-//	@GetMapping("/dateofbirth/{dateOfBirth}")
-//	public List<Professor> getProfessorsByDateOfBirth(@PathVariable String dateOfBirth){
-//		return professorService.getProfessorsByDateOfBirth(dateOfBirth);
-//	}
-//	
-//	@GetMapping("/title/{title}")
-//	public List<Professor> getProfessorsByTitle(@PathVariable String title){
-//		return professorService.getProfessorsByTitle(title);
-//	}
-//	
-//	@GetMapping("/courses/{courses}")
-//	public List<Professor> getProfessorsByTeachingCourses(@PathVariable String courses){
-//		return professorService.getProfessorsByTeachingCourses(courses);
+	
+//	@PutMapping(value = {"", "/"})
+//	public void updateProfessor(RequestParam String id, @RequestBody StudentDto student) {
+//		studentService.updateStudent(UUID.fromString(id), student);
 //	}
 
 }
