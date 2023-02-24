@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import com.home.demo.demospringbootapp.dto.ProfessorDto;
 import com.home.demo.demospringbootapp.dto.StudentDto;
 import com.home.demo.demospringbootapp.entities.Professor;
+import com.home.demo.demospringbootapp.entities.Student;
 import com.home.demo.demospringbootapp.mappers.ProfessorMapper;
 import com.home.demo.demospringbootapp.mappers.StudentMapper;
 import com.home.demo.demospringbootapp.repositories.ProfessorRepository;
@@ -64,5 +65,17 @@ public class ProfessorService {
 	}
 	
 	//TODO create PUT and POST methods
+	public void addProfessor(ProfessorDto professorDto) {
+		Professor newProfessor = ProfessorMapper.INSTANCE.toProfessor(professorDto);
+		professorRepository.save(newProfessor);
+		logger.info("Professor mapped & added: {}", newProfessor);
+	}
 	
+	public void updateProfessor(UUID id, ProfessorDto professorDto) {
+		professorDto.setProfessorId(professorRepository.findById(id).get().getProfessorId());
+		logger.info("Professor (DTO) found: {}", professorDto.toString());	
+		Professor updatedProfessor = ProfessorMapper.INSTANCE.toProfessor(professorDto);
+		professorRepository.save(updatedProfessor);
+		logger.info("Professor updated: {}", updatedProfessor.toString());
+	}
 }

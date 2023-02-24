@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -17,6 +18,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.home.demo.demospringbootapp.dto.StudentDto;
 import com.home.demo.demospringbootapp.services.StudentService;
+
+import jakarta.websocket.server.PathParam;
 
 @RestController
 @RequestMapping("/students")
@@ -44,7 +47,7 @@ public class StudentController {
 	}
 	
 	@PutMapping(value = {"{id}", "/{id}"})
-	public void updateStudent(@RequestParam("id") String id, @RequestBody StudentDto student) {
+	public void updateStudent(@PathVariable String id, @RequestBody StudentDto student) {
 		studentService.updateStudent(UUID.fromString(id), student);
 	}
 	

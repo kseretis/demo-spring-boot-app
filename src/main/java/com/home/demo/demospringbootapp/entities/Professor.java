@@ -19,7 +19,7 @@ import jakarta.persistence.Table;
 public class Professor extends Person{
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue
 	private UUID professorId;
 	private String title;
 	private int teachingCourses;

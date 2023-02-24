@@ -30,9 +30,6 @@ public class StudentService {
 	public List<StudentDto> getStudents(Map<String, String> params) {
 		Specification<Student> spec = Specification.where(null);
 		
-//		if (params.get("studentId") != null) 
-//			spec = spec.and(StudentSpecifications.withProperty("studentId", UUID.fromString(params.get("studentId"))) );
-		
 		if (params.get("firstName") != null) 
 			spec = spec.and(StudentSpecifications.nameLike("firstName", params.get("firstName")));
 		
@@ -63,18 +60,16 @@ public class StudentService {
 		logger.info("Student supervisor matched: {}", studentDto.toString());
 		
 		Student newStudent = StudentMapper.INSTANCE.toStudent(studentDto);
-		logger.info("Student mapped: {}", newStudent.toString());
-		
 		studentRepository.save(newStudent);
-		logger.info("Student added: {}", newStudent.toString());
+		logger.info("Student mapped & added: {}", newStudent.toString());
 	}
 	
 	public void updateStudent(UUID id, StudentDto studentDto) {
-		studentDto.setStudentId(studentRepository.findById(id).get().getStudentId());
+		studentDto.setStudentId( studentRepository.findById(id).get().getStudentId());
 		logger.info("Student (DTO) found: {}", studentDto.toString());
 		Student updatedStudent = StudentMapper.INSTANCE.toStudent(studentDto);
 		studentRepository.save(updatedStudent);
-		logger.info("Student updated {}", updatedStudent.toString());
+		logger.info("Student updated: {}", updatedStudent.toString());
 	}
 	
 	/*
