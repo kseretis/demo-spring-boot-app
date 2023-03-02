@@ -22,6 +22,6 @@ public interface ProfessorRepository extends JpaRepository<Professor, UUID>, Pro
 			+ " INNER JOIN Supervising sv on sv.supervisorId = p.professorId "
 			+ " INNER JOIN Student s on s.studentId = sv.studentId "
 			+ " WHERE p.professorId = :id")
-	public List<StudentDto> fetchSupervisingStudents(@Param("id") UUID id);
+	public List<StudentDto> fetchSupervisingStudents(@Param("id") UUID id) throws NullPointerException;
 	
 }

@@ -12,6 +12,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import com.home.demo.demospringbootapp.dto.ProfessorDto;
+import com.home.demo.demospringbootapp.dto.StudentDto;
 import com.home.demo.demospringbootapp.entities.Professor;
 import com.home.demo.demospringbootapp.mappers.ProfessorMapper;
 import com.home.demo.demospringbootapp.repositories.ProfessorRepository;
@@ -36,9 +37,11 @@ public class ProfessorService {
 		List<ProfessorDto> professorsDTO = professors.stream().map(ProfessorMapper.INSTANCE::toProfessorDto).collect(Collectors.toList());
 		
 		// Fetch supervising students
-//		professorsDTO.forEach( professor -> {
-//			professor.setListOfSupervisingStudents(professorRepository.fetchSupervisingStudents(professor.getProfessorId()));
-//		});
+		professorsDTO.forEach( professor -> {
+			List<StudentDto> students = professorRepository.fetchSupervisingStudents(professor.getProfessorId());
+			log.info("list of students: {]", Arrays.toString(students.toArray()));
+			professor.setListOfSupervisingStudents(students);
+		});
 		log.info("Professors (DTO) found: {}", Arrays.toString(professorsDTO.toArray()));
 		
 		return professorsDTO;
@@ -46,7 +49,14 @@ public class ProfessorService {
 	
 	public ProfessorDto getProfessor(UUID id) {
 		ProfessorDto professor = ProfessorMapper.INSTANCE.toProfessorDto(professorRepository.findById(id).get());
-		professor.setListOfSupervisingStudents(professorRepository.fetchSupervisingStudents(professor.getProfessorId()));
+		log.info("Professor (DTO) found: {}", professor.toString());
+		
+		try {
+			List<StudentDto> students = professorRepository.fetchSupervisingStudents(professor.getProfessorId());
+			log.info("Supervising students: {}", Arrays.toString(students.toArray()));
+			professor.setListOfSupervisingStudents(students);
+		} catch (NullPointerException ex) {}
+		
 		return professor;
 	}
 	

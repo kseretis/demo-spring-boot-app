@@ -43,4 +43,11 @@ public class Professor extends Person{
 		this.teachingCourses = teachingCourses;
 	}
 	
+	public Professor(String firstName, String lastName, LocalDate dateOfBirth, String title, int teachingCourses, List<Student> students) {
+		super(firstName, lastName, dateOfBirth);
+		this.title = title;
+		this.teachingCourses = teachingCourses;
+		this.students = students;
+	}
+	
 }
