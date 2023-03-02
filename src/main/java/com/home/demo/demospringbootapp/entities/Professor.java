@@ -9,11 +9,18 @@ import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
+@Data
+@NoArgsConstructor
+@EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true)
 @Entity
 @Table(name = "professors")
 public class Professor extends Person{
@@ -27,51 +34,13 @@ public class Professor extends Person{
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<Student> students;
 	
-	public Professor() {}
-
+//	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+//	private List<Course> courses;
+	
 	public Professor(String firstName, String lastName, LocalDate dateOfBirth, String title, int teachingCourses) {
 		super(firstName, lastName, dateOfBirth);
 		this.title = title;
 		this.teachingCourses = teachingCourses;
 	}
-
-	public UUID getProfessorId() {
-		return professorId;
-	}
-
-	public void setProfessorId(UUID professorId) {
-		this.professorId = professorId;
-	}
-
-	public String getTitle() {
-		return title;
-	}
-
-	public void setTitle(String title) {
-		this.title = title;
-	}
-
-	public int getTeachingCourses() {
-		return teachingCourses;
-	}
-
-	public void setTeachingCourses(int teachingCourses) {
-		this.teachingCourses = teachingCourses;
-	}
 	
-	public List<Student> getStudents() {
-		return students;
-	}
-
-	public void setStudents(List<Student> students) {
-		this.students = students;
-	}
-
-	@Override
-	public String toString() {
-		return "Professor [professorId=" + professorId + ", getFirstName()=" + getFirstName() + ", getLastName()=" + getLastName()
-				+ ", getDateOfBirth()=" + getDateOfBirth() + ", title=" + title + ", teachingCourses=" + teachingCourses
-				+ ", students=" + students + "]";
-	}
-
 }

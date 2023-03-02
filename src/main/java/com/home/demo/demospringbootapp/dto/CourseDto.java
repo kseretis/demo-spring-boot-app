@@ -2,20 +2,27 @@ package com.home.demo.demospringbootapp.dto;
 
 import java.util.UUID;
 
+import com.home.demo.demospringbootapp.entities.Course;
+import com.home.demo.demospringbootapp.entities.Course.CourseStatus;
+
 public class CourseDto {
 	
 	private UUID courseId;
 	private String courseName;
 	private int coveredSeats;
-	private int maxStudents;
+	private int maxSeats;
+	private Course.CourseStatus status;
 	private String professorName;
 	
-	public CourseDto(UUID courseId, String courseName, int coveredSeats, int maxStudents, String professorName) {
+	public CourseDto() {}
+	
+	public CourseDto(String courseName, int coveredSeats, int maxSeats, CourseStatus status, 
+				String professorName) {
 		super();
-		this.courseId = courseId;
 		this.courseName = courseName;
 		this.coveredSeats = coveredSeats;
-		this.maxStudents = maxStudents;
+		this.maxSeats = maxSeats;
+		this.status = status;
 		this.professorName = professorName;
 	}
 
@@ -43,12 +50,20 @@ public class CourseDto {
 		this.coveredSeats = coveredSeats;
 	}
 
-	public int getMaxStudents() {
-		return maxStudents;
+	public int getMaxSeats() {
+		return maxSeats;
 	}
 
-	public void setMaxStudents(int maxStudents) {
-		this.maxStudents = maxStudents;
+	public void setMaxSeats(int maxSeats) {
+		this.maxSeats = maxSeats;
+	}
+
+	public Course.CourseStatus getStatus() {
+		return status;
+	}
+
+	public void setStatus(Course.CourseStatus status) {
+		this.status = status;
 	}
 
 	public String getProfessorName() {
@@ -57,6 +72,12 @@ public class CourseDto {
 
 	public void setProfessorName(String professorName) {
 		this.professorName = professorName;
+	}
+
+	@Override
+	public String toString() {
+		return "CourseDto [courseId=" + courseId + ", courseName=" + courseName + ", coveredSeats=" + coveredSeats
+				+ ", maxSeats=" + maxSeats + ", status=" + status + ", professorName=" + professorName + "]";
 	}
 
 }

@@ -11,8 +11,6 @@ import com.home.demo.demospringbootapp.dto.CourseDto;
 
 public interface CourseRepository extends JpaRepository<Course, UUID>{
 	
-	public List<Course> findByCourseName(String courseName);
-	
 //	@Query("SELECT new com.home.demo.demospringbootapp.models.CourseDto( "
 //			+ "c.courseId, c.courseName, c.coveredSeats, c.maxStudents, "
 //			+ "CONCAT(p.firstName, ' ', p.lastName) )"

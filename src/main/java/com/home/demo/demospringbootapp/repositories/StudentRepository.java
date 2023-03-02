@@ -7,13 +7,11 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-import org.springframework.stereotype.Repository;
 
 import com.home.demo.demospringbootapp.dto.StudentDto;
 import com.home.demo.demospringbootapp.entities.Student;
 import com.home.demo.demospringbootapp.specifications.StudentSpecifications;
 
-@Repository
 public interface StudentRepository extends JpaRepository<Student, UUID>, StudentSpecifications {
 	
 	public List<Student> findAll(Specification<Student> spec);

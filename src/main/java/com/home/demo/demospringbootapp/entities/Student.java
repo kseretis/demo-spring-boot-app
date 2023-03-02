@@ -1,5 +1,6 @@
 package com.home.demo.demospringbootapp.entities;
 
+import java.time.LocalDate;
 import java.util.UUID;
 import com.home.demo.demospringbootapp.models.Person;
 
@@ -10,7 +11,15 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
+@Data
+@NoArgsConstructor
+@EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true)
 @Entity
 @Table(name = "students")
 public class Student extends Person{
@@ -20,57 +29,15 @@ public class Student extends Person{
 	private UUID studentId;
 	private int classYear;
 	private double grade;
-//	private UUID supervisorId;
 	
 	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "supervisor_id", referencedColumnName = "professorId")
 	private Professor supervisor; 
 	
-	public Student() {}
-	
-	public Student(int classYear, double grade) {
-		super();
+	public Student(String firstName, String lastName, LocalDate dateOfBirth, int classYear, double grade) {
+		super(firstName, lastName, dateOfBirth);
 		this.classYear = classYear;
 		this.grade = grade;
-	}
-
-	public UUID getStudentId() {
-		return studentId;
-	}
-
-	public void setStudentId(UUID studentId) {
-		this.studentId = studentId;
-	}
-
-	public int getClassYear() {
-		return classYear;
-	}
-
-	public void setClassYear(int classYear) {
-		this.classYear = classYear;
-	}
-
-	public double getGrade() {
-		return grade;
-	}
-
-	public void setGrade(double grade) {
-		this.grade = grade;
-	}
-	
-	public Professor getSupervisor() {
-		return supervisor;
-	}
-
-	public void setSupervisor(Professor supervisor) {
-		this.supervisor = supervisor;
-	}
-
-	@Override
-	public String toString() {
-		return "Student [studentId=" + studentId + ", getFirstName()=" + getFirstName() + ", getLastName()=" + getLastName() 
-				+ ", getDateOfBirth()=" + getDateOfBirth() + ", classYear=" + classYear + ", grade=" + grade 
-				+ ", supervisor=" + supervisor + "]";			 
 	}
 	
 }

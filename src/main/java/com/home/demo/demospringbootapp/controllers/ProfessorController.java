@@ -21,7 +21,7 @@ import com.home.demo.demospringbootapp.dto.StudentDto;
 import com.home.demo.demospringbootapp.services.ProfessorService;
 
 @RestController
-@RequestMapping("/professors")
+@RequestMapping("/api/v1/professors")
 public class ProfessorController {
 	
 	private Logger logger = LoggerFactory.getLogger(ProfessorController.class);
@@ -49,10 +49,5 @@ public class ProfessorController {
 	public void updateProfessor(@PathVariable String id, @RequestBody ProfessorDto professor) {
 		professorService.updateProfessor(UUID.fromString(id), professor);
 	}
-	
-//	@PutMapping(value = {"", "/"})
-//	public void updateProfessor(RequestParam String id, @RequestBody StudentDto student) {
-//		studentService.updateStudent(UUID.fromString(id), student);
-//	}
 
 }

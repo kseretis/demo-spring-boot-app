@@ -33,7 +33,7 @@ public interface StudentMapper {
 	
 	@Named("setFullName")
 	default String setFullName(Professor professor) {
-		return professor != null ? professor.getFirstName() + " " + professor.getLastName() : null;
+		return professor != null ? professor.getFullName() : null;
 	}
 	
 }

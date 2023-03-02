@@ -4,47 +4,41 @@ import java.time.LocalDate;
 import java.util.UUID;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.home.demo.demospringbootapp.models.Person;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true)
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
-public class StudentDto {
+public class StudentDto extends Person{
 	
 	private UUID studentId;
-	private String firstName;
-	private String lastName;
-	private LocalDate dateOfBirth;
 	private int classYear;
 	private double grade;
 	private UUID supervisorId;
 	private String supervisorName;
-	
-	public StudentDto() {}
 	
 	public StudentDto(UUID supervisorId, String supervisorName) {
 		this.supervisorId = supervisorId;
 		this.supervisorName = supervisorName;
 	}
 	
-	public StudentDto(UUID studentId, String firstName, String lastName, int classYear, double grade) {
+	public StudentDto(UUID studentId, String firstName, String lastName, LocalDate dateOfbirth,
+							int classYear, double grade) {
+		super(firstName, lastName, dateOfbirth);
 		this.studentId = studentId;
-		this.firstName = firstName;
-		this.lastName = lastName;
 		this.classYear = classYear;
 		this.grade = grade;
 	}
 
-	public StudentDto(UUID studentId, String firstName, String lastName, LocalDate dateOfBirth, int classYear,
-			double grade, UUID supervisorId, String supervisorName) {
-		super();
-		this.studentId = studentId;
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.dateOfBirth = dateOfBirth;
-		this.classYear = classYear;
-		this.grade = grade;
-		this.supervisorId = supervisorId;
-		this.supervisorName = supervisorName;
-	}
-	
 	public void updateSupervisorInfo(StudentDto studentDto) {
 		if (studentDto != null) {
 			supervisorId = studentDto.getSupervisorId();
@@ -52,75 +46,4 @@ public class StudentDto {
 		}
 	}
 
-	public UUID getStudentId() {
-		return studentId;
-	}
-
-	public void setStudentId(UUID studentId) {
-		this.studentId = studentId;
-	}
-
-	public String getFirstName() {
-		return firstName;
-	}
-
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
-
-	public String getLastName() {
-		return lastName;
-	}
-
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
-	}
-
-	public LocalDate getDateOfBirth() {
-		return dateOfBirth;
-	}
-
-	public void setDateOfBirth(LocalDate dateOfBirth) {
-		this.dateOfBirth = dateOfBirth;
-	}
-
-	public int getClassYear() {
-		return classYear;
-	}
-
-	public void setClassYear(int classYear) {
-		this.classYear = classYear;
-	}
-
-	public double getGrade() {
-		return grade;
-	}
-
-	public void setGrade(double grade) {
-		this.grade = grade;
-	}
-
-	public UUID getSupervisorId() {
-		return supervisorId;
-	}
-
-	public void setSupervisorId(UUID supervisorId) {
-		this.supervisorId = supervisorId;
-	}
-
-	public String getSupervisorName() {
-		return supervisorName;
-	}
-
-	public void setSupervisorName(String supervisorName) {
-		this.supervisorName = supervisorName;
-	}
-
-	@Override
-	public String toString() {
-		return "StudentDto [studentId=" + studentId + ", firstName=" + firstName + ", lastName=" + lastName
-				+ ", dateOfBirth=" + dateOfBirth + ", classYear=" + classYear + ", grade=" + grade + ", supervisorId="
-				+ supervisorId + ", supervisorName=" + supervisorName + "]";
-	}
-	
 }

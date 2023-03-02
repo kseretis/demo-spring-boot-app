@@ -4,8 +4,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,13 +17,12 @@ import org.springframework.web.bind.annotation.RestController;
 import com.home.demo.demospringbootapp.dto.StudentDto;
 import com.home.demo.demospringbootapp.services.StudentService;
 
-import jakarta.websocket.server.PathParam;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @RestController
-@RequestMapping("/students")
+@RequestMapping("/api/v1/students")
 public class StudentController {
-	
-	Logger logger = LoggerFactory.getLogger(StudentController.class);
 	
 	@Autowired
 	private StudentService studentService;
@@ -42,7 +39,7 @@ public class StudentController {
 	
 	@PostMapping(value = {"", "/"})
 	public void addStudent(@RequestBody StudentDto student) {
-		logger.info("Student request body: {}", student.toString());
+		log.info("Student request body: {}", student.toString());
 		studentService.addStudent(student);
 	}
 	
