@@ -66,7 +66,7 @@ public class CourseService {
 		log.info("Professor (DTO) found: {]", professorDto.toString());
 		updatedCourse.setProfessor(ProfessorMapper.INSTANCE.toProfessor(professorDto));
 		log.info("Course found: {}", updatedCourse.toString());
-		
+		//FIXME bug here
 		// Update
 		courseRepository.save(updatedCourse);
 		log.info("Course updated : {}", updatedCourse.toString());
