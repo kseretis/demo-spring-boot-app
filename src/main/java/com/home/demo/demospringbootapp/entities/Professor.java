@@ -12,6 +12,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -31,11 +32,13 @@ public class Professor extends Person{
 	private String title;
 	private int teachingCourses;
 	
+	@Transient
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<Student> students;
 	
-//	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-//	private List<Course> courses;
+	@Transient
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private List<Course> courses;
 	
 	public Professor(String firstName, String lastName, LocalDate dateOfBirth, String title, int teachingCourses) {
 		super(firstName, lastName, dateOfBirth);

@@ -39,5 +39,13 @@ public class ProfessorDto extends Person{
 //		this.listOfCourses = listOfCourses;
 		this.listOfSupervisingStudents = listOfSupervisingStudents;
 	}
+	
+	public ProfessorDto(UUID professorId, String firstName, String lastName, LocalDate dateOfbirth, String title,
+			int numberOfTeachingCourses) {
+		super(firstName, lastName, dateOfbirth);
+		this.professorId = professorId;
+		this.title = title;
+		this.numberOfTeachingCourses = numberOfTeachingCourses;
+	}
 
 }

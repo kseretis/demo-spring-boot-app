@@ -14,25 +14,28 @@ import org.springframework.stereotype.Service;
 import com.home.demo.demospringbootapp.entities.Course;
 import com.home.demo.demospringbootapp.entities.Student;
 import com.home.demo.demospringbootapp.mappers.CourseMapper;
+import com.home.demo.demospringbootapp.mappers.ProfessorMapper;
 import com.home.demo.demospringbootapp.mappers.StudentMapper;
 import com.home.demo.demospringbootapp.dto.CourseDto;
+import com.home.demo.demospringbootapp.dto.ProfessorDto;
 import com.home.demo.demospringbootapp.dto.StudentDto;
 import com.home.demo.demospringbootapp.repositories.CourseRepository;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Service
 public class CourseService {
-	
-	Logger logger = LoggerFactory.getLogger(CourseService.class);
-	
+
 	@Autowired
 	private CourseRepository courseRepository;
 
 	public List<CourseDto> getCourses() {
 		List<Course> courses = courseRepository.findAll();
-		logger.info("Courses : {}", Arrays.toString(courses.toArray()));
+		log.info("Courses : {}", Arrays.toString(courses.toArray()));
 		List<CourseDto> coursesDto = courses.stream().map(CourseMapper.INSTANCE::toCourseDto)
 					.collect(Collectors.toList());
-		logger.info("Courses (DTO) : {}", Arrays.toString(coursesDto.toArray()));
+		log.info("Courses (DTO) : {}", Arrays.toString(coursesDto.toArray()));
 		return coursesDto;
 	}
 	
@@ -45,16 +48,27 @@ public class CourseService {
 		
 		Course newCourse= CourseMapper.INSTANCE.toCourse(courseDto);
 		courseRepository.save(newCourse);
-		logger.info("Course mapped & added: {}", newCourse.toString());
+		log.info("Course mapped & added: {}", newCourse.toString());
 	}
 	
 	
 	
 	public void updateCourse(UUID id, CourseDto courseDto) {
+		// Set course ID
 		courseDto.setCourseId(courseRepository.findById(id).get().getCourseId());
-		logger.info("Course (DTO) found: {}", courseDto.toString());
+		log.info("Course (DTO) found: {}", courseDto.toString());
+		
+		// Map to course DTO
 		Course updatedCourse = CourseMapper.INSTANCE.toCourse(courseDto);
+		log.info("Course mapped: {}", updatedCourse.toString());
+		// Fetch Professor info & map them to relevant Course
+		ProfessorDto professorDto = courseRepository.fetchProfessor(updatedCourse.getCourseId());
+		log.info("Professor (DTO) found: {]", professorDto.toString());
+		updatedCourse.setProfessor(ProfessorMapper.INSTANCE.toProfessor(professorDto));
+		log.info("Course found: {}", updatedCourse.toString());
+		
+		// Update
 		courseRepository.save(updatedCourse);
-		logger.info("Course updated : {}", updatedCourse.toString());
+		log.info("Course updated : {}", updatedCourse.toString());
 	}
 }

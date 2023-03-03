@@ -18,11 +18,12 @@ import com.home.demo.demospringbootapp.dto.CourseDto;
 import com.home.demo.demospringbootapp.dto.ProfessorDto;
 import com.home.demo.demospringbootapp.services.CourseService;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @RestController
 @RequestMapping("/api/v1/courses")
 public class CourseController {
-	
-	Logger logger = LoggerFactory.getLogger(CourseController.class);
 
 	@Autowired
 	private CourseService courseService;
@@ -34,7 +35,7 @@ public class CourseController {
 	
 	@PostMapping(value = {"", "/"})
 	public void addCourse(@RequestBody CourseDto course) {
-		logger.info("Course request body: {}", course.toString());
+		log.info("Course request body: {}", course.toString());
 		courseService.addCourse(course);
 	}
 	

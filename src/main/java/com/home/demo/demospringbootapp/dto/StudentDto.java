@@ -38,6 +38,13 @@ public class StudentDto extends Person{
 		this.classYear = classYear;
 		this.grade = grade;
 	}
+	
+	public StudentDto(UUID studentId, String firstName, String lastName, int classYear, double grade) {
+		super(firstName, lastName);
+		this.studentId = studentId;
+		this.classYear = classYear;
+		this.grade = grade;
+	}
 
 	public void updateSupervisorInfo(StudentDto studentDto) {
 		if (studentDto != null) {
