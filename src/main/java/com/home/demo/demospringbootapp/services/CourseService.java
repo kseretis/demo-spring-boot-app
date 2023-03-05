@@ -2,6 +2,7 @@ package com.home.demo.demospringbootapp.services;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -27,10 +28,10 @@ public class CourseService {
 	private CourseRepository courseRepository;
 
 	@Autowired
-	private GenericSpecification<Course> genericSpecification;
+	private GenericSpecification<Course> courseSpecification;
 
-	public List<CourseDto> getCourses() {
-		List<Course> courses = courseRepository.findAll();
+	public List<CourseDto> getCourses(Map<String, String> params) {
+		List<Course> courses = courseRepository.findAll(courseSpecification.specifyFilters(params));
 		log.info("Courses : {}", Arrays.toString(courses.toArray()));
 		List<CourseDto> coursesDto = courses.stream().map(CourseMapper.INSTANCE::toCourseDto)
 					.collect(Collectors.toList());
