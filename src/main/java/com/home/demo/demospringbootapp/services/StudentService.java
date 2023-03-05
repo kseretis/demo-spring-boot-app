@@ -7,16 +7,14 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+import com.home.demo.demospringbootapp.specifications.GenericSpecification;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
-
 import com.home.demo.demospringbootapp.mappers.StudentMapper;
 import com.home.demo.demospringbootapp.repositories.StudentRepository;
 import com.home.demo.demospringbootapp.specifications.StudentSpecifications;
-
 import lombok.extern.slf4j.Slf4j;
-
 import com.home.demo.demospringbootapp.dto.StudentDto;
 import com.home.demo.demospringbootapp.entities.Student;
 
@@ -26,6 +24,9 @@ public class StudentService {
 	
 	@Autowired
 	private StudentRepository studentRepository;
+
+	@Autowired
+	private GenericSpecification<Student> genericSpecification;
 	
 	public List<StudentDto> getStudents(Map<String, String> params) {
 		
@@ -73,10 +74,12 @@ public class StudentService {
 	
 	private Specification<Student> specifyFilters(Map<String, String> params){
 		Specification<Student> spec = Specification.where(null);
-		
-		if (params.get("firstName") != null) 
+		Specification<Student> newspec = Specification.where(null);
+
+		if (params.get("firstName") != null) {
 			spec = spec.and(StudentSpecifications.nameLike("firstName", params.get("firstName")));
-		
+			newspec = spec.and(genericSpecification.nameLike("firstName", params.get("firstName")));
+		}
 		if (params.get("lastName") != null) 
 			spec = spec.and(StudentSpecifications.nameLike("lastName", params.get("lastName")) );
 		
@@ -88,7 +91,7 @@ public class StudentService {
 		
 		if (params.get("grade") != null) 
 			spec = spec.and(StudentSpecifications.withProperty("grade", Double.parseDouble(params.get("grade"))));
-		
-		return spec;
+
+		return newspec;
 	}
 }

@@ -15,5 +15,6 @@ public interface ProfessorSpecifications {
         return (root, query, criteriaBuilder) -> 
         	criteriaBuilder.like(root.get(name), "%" + value + "%");
     }
+
     
 }
