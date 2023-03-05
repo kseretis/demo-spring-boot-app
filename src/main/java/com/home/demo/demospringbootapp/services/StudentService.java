@@ -4,6 +4,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 import com.home.demo.demospringbootapp.specifications.GenericSpecification;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.home.demo.demospringbootapp.mappers.StudentMapper;
@@ -45,7 +46,8 @@ public class StudentService {
 	public StudentDto getStudent(UUID id) {
 		return StudentMapper.INSTANCE.toStudentDto(studentRepository.findById(id).get());
 	}
-	
+
+	@Transactional
 	public void addStudent(StudentDto studentDto) {
 		if (studentDto.getSupervisorId() != null) {
 			studentDto.updateSupervisorInfo(studentRepository
@@ -57,7 +59,8 @@ public class StudentService {
 		studentRepository.save(newStudent);
 		log.info("Student mapped & added: {}", newStudent.toString());
 	}
-	
+
+	@Transactional
 	public void updateStudent(UUID id, StudentDto studentDto) {
 		studentDto.setStudentId( studentRepository.findById(id).get().getStudentId());
 		log.info("Student (DTO) found: {}", studentDto.toString());

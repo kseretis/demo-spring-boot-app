@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -38,7 +39,7 @@ public class StudentController {
 	}
 	
 	@PostMapping(value = {"", "/"})
-	public void addStudent(@RequestBody StudentDto student) {
+	public void addStudent(@RequestBody @NonNull StudentDto student) {
 		log.info("Student request body: {}", student.toString());
 		studentService.addStudent(student);
 	}

@@ -9,7 +9,7 @@ public class CourseStatusConverter implements AttributeConverter<CourseStatus, S
 
     @Override
     public String convertToDatabaseColumn(CourseStatus attribute) {
-        return attribute.name().toLowerCase();
+        return attribute.name();
     }
 
     @Override

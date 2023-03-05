@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+import jakarta.validation.constraints.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -38,7 +39,7 @@ public class ProfessorController {
 	}
 	
 	@PostMapping(value = {"", "/"})
-	public void addProfessor(@RequestBody ProfessorDto professor) {
+	public void addProfessor(@RequestBody @NotNull ProfessorDto professor) {
 		log.info("Professor request body: {}", professor.toString());
 		professorService.addProfessor(professor);
 	}

@@ -7,6 +7,7 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 import com.home.demo.demospringbootapp.specifications.GenericSpecification;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.home.demo.demospringbootapp.dto.ProfessorDto;
@@ -46,7 +47,7 @@ public class ProfessorService {
 		
 		return professorsDTO;
 	}
-	
+
 	public ProfessorDto getProfessor(UUID id) {
 		ProfessorDto professor = ProfessorMapper.INSTANCE.toProfessorDto(professorRepository.findById(id).get());
 		log.info("Professor (DTO) found: {}", professor.toString());
@@ -59,13 +60,15 @@ public class ProfessorService {
 		
 		return professor;
 	}
-	
+
+	@Transactional
 	public void addProfessor(ProfessorDto professorDto) {
 		Professor newProfessor = ProfessorMapper.INSTANCE.toProfessor(professorDto);
 		professorRepository.save(newProfessor);
 		log.info("Professor mapped & added: {}", newProfessor);
 	}
-	
+
+	@Transactional
 	public void updateProfessor(UUID id, ProfessorDto professorDto) {
 		professorDto.setProfessorId(professorRepository.findById(id).get().getProfessorId());
 		log.info("Professor (DTO) found: {}", professorDto.toString());	

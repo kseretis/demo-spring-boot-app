@@ -39,7 +39,11 @@ public class CourseService {
 		return coursesDto;
 	}
 
-//	@Transactional
+	public CourseDto getCourse(UUID id) {
+		return CourseMapper.INSTANCE.toCourseDto(courseRepository.findById(id).get());
+	}
+
+	@Transactional
 	public void addCourse(CourseDto courseDto) {
 		Course newCourse = CourseMapper.INSTANCE.toCourse(courseDto);
 		log.info("Course mapped: {}", newCourse.toString());
