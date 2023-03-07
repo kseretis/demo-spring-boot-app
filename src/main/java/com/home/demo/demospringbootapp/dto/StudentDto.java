@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.UUID;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.home.demo.demospringbootapp.models.Person;
 
 import lombok.AllArgsConstructor;
@@ -17,6 +18,8 @@ import lombok.ToString;
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
+@JsonPropertyOrder({"studentId", "firstName", "lastName", "dateOfBirth", "classYear", "grade",
+					"supervisorId", "supervisorName"})
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class StudentDto extends Person{
 	

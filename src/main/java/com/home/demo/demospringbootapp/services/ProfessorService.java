@@ -6,13 +6,13 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+import com.home.demo.demospringbootapp.dto.projections.SupervisingStudentProjection;
 import com.home.demo.demospringbootapp.dto.projections.TeachingCourseProjection;
 import com.home.demo.demospringbootapp.specifications.GenericSpecification;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.home.demo.demospringbootapp.dto.ProfessorDto;
-import com.home.demo.demospringbootapp.dto.StudentDto;
 import com.home.demo.demospringbootapp.entities.Professor;
 import com.home.demo.demospringbootapp.mappers.ProfessorMapper;
 import com.home.demo.demospringbootapp.repositories.ProfessorRepository;
@@ -48,7 +48,7 @@ public class ProfessorService {
 		log.info("Professor (DTO) found: {}", professor.toString());
 		
 		try {
-			List<StudentDto> students = professorRepository.fetchSupervisingStudents(professor.getProfessorId());
+			List<SupervisingStudentProjection> students = professorRepository.fetchSupervisingStudents(professor.getProfessorId());
 			log.info("Supervising students: {}", Arrays.toString(students.toArray()));
 			professor.setListOfSupervisingStudents(students);
 		} catch (NullPointerException ignored) {}
@@ -73,7 +73,7 @@ public class ProfessorService {
 	}
 
 	private ProfessorDto fetchStudentsAndCourses(ProfessorDto professor) {
-		List<StudentDto> students = professorRepository.fetchSupervisingStudents(professor.getProfessorId());
+		List<SupervisingStudentProjection> students = professorRepository.fetchSupervisingStudents(professor.getProfessorId());
 		log.info("list of students: {}", Arrays.toString(students.toArray()));
 		professor.setListOfSupervisingStudents(students);
 

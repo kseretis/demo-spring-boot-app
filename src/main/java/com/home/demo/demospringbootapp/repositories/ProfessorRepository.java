@@ -3,6 +3,7 @@ package com.home.demo.demospringbootapp.repositories;
 import java.util.List;
 import java.util.UUID;
 
+import com.home.demo.demospringbootapp.dto.projections.SupervisingStudentProjection;
 import com.home.demo.demospringbootapp.dto.projections.TeachingCourseProjection;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -21,7 +22,7 @@ public interface ProfessorRepository extends JpaRepository<Professor, UUID> {
 			+ " INNER JOIN Supervising sv on sv.supervisorId = p.professorId "
 			+ " INNER JOIN Student s on s.studentId = sv.studentId "
 			+ " WHERE p.professorId = :id")
-	List<StudentDto> fetchSupervisingStudents(@Param("id") UUID id) throws NullPointerException;
+	List<SupervisingStudentProjection> fetchSupervisingStudents(@Param("id") UUID id) throws NullPointerException;
 
 	@Query("SELECT new com.home.demo.demospringbootapp.dto.CourseDto("
 			+ "c.courseId, c.courseName, c.status) "
