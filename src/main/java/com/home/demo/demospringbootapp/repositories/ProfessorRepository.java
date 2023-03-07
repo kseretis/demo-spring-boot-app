@@ -9,7 +9,6 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-import com.home.demo.demospringbootapp.dto.StudentDto;
 import com.home.demo.demospringbootapp.entities.Professor;
 
 public interface ProfessorRepository extends JpaRepository<Professor, UUID> {
@@ -30,5 +29,10 @@ public interface ProfessorRepository extends JpaRepository<Professor, UUID> {
 			+ " INNER JOIN Course c on c.professor.professorId = p.professorId "
 			+ " WHERE p.professorId = :id")
 	List<TeachingCourseProjection> fetchTeachingCourses(@Param("id") UUID id) throws NullPointerException;
+
+	@Query("select count(c) from Professor p " +
+			" inner join Course c on c.professorId = p.professorId " +
+			" where p.professorId = :professorId")
+	int countProfessorOccurrences(@Param("professorId") UUID professorId);
 	
 }

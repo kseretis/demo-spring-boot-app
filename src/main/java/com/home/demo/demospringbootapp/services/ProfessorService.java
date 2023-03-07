@@ -10,6 +10,7 @@ import com.home.demo.demospringbootapp.dto.projections.SupervisingStudentProject
 import com.home.demo.demospringbootapp.dto.projections.TeachingCourseProjection;
 import com.home.demo.demospringbootapp.specifications.GenericSpecification;
 import jakarta.transaction.Transactional;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.home.demo.demospringbootapp.dto.ProfessorDto;
@@ -70,8 +71,10 @@ public class ProfessorService {
 		Professor updatedProfessor = ProfessorMapper.INSTANCE.toProfessor(professorDto);
 		professorRepository.save(updatedProfessor);
 		log.info("Professor updated: {}", updatedProfessor.toString());
+//		updateTeachingCourses(updatedProfessor);
 	}
 
+	@Transactional
 	private ProfessorDto fetchStudentsAndCourses(ProfessorDto professor) {
 		List<SupervisingStudentProjection> students = professorRepository.fetchSupervisingStudents(professor.getProfessorId());
 		log.info("list of students: {}", Arrays.toString(students.toArray()));
@@ -81,6 +84,13 @@ public class ProfessorService {
 		log.info("list of courses: {}", Arrays.toString(courses.toArray()));
 		professor.setListOfCourses(courses);
 		return professor;
+	}
+
+	@Transactional
+	private void updateTeachingCourses(@NotNull Professor professor) {
+		professor.setTeachingCourses(professorRepository.countProfessorOccurrences(professor.getProfessorId()));
+		log.info("Professor teaching course updated to : {}", professor.getTeachingCourses());
+		professorRepository.save(professor);
 	}
 
 }

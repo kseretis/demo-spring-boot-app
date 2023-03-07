@@ -22,7 +22,6 @@ import lombok.ToString;
 					"supervisorId", "supervisorName"})
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class StudentDto extends Person{
-	
 	private UUID studentId;
 	private int classYear;
 	private double grade;
@@ -34,9 +33,9 @@ public class StudentDto extends Person{
 		this.supervisorName = supervisorName;
 	}
 	
-	public StudentDto(UUID studentId, String firstName, String lastName, LocalDate dateOfbirth,
+	public StudentDto(UUID studentId, String firstName, String lastName, LocalDate dateOfBirth,
 							int classYear, double grade) {
-		super(firstName, lastName, dateOfbirth);
+		super(firstName, lastName, dateOfBirth);
 		this.studentId = studentId;
 		this.classYear = classYear;
 		this.grade = grade;

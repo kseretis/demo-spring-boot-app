@@ -9,6 +9,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import com.home.demo.demospringbootapp.entities.Course;
 import com.home.demo.demospringbootapp.dto.ProfessorDto;
+import org.springframework.lang.NonNull;
+import org.springframework.lang.Nullable;
 
 public interface CourseRepository extends JpaRepository<Course, UUID>{
 
@@ -19,5 +21,8 @@ public interface CourseRepository extends JpaRepository<Course, UUID>{
 			+ " FROM Professor p "
 			+ " WHERE p.professorId = :id")
 	ProfessorDto fetchProfessor(@Param("id") UUID id);
-	
+
+	@Query("select count(c) from Course c where c.professor.professorId = :professorId")
+	int countProfessorOccurrences(@Param("professorId") UUID professorId);
+
 }
