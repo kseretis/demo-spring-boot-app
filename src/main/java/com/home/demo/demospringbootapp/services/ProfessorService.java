@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+import com.home.demo.demospringbootapp.dto.projections.TeachingCourseProjection;
 import com.home.demo.demospringbootapp.specifications.GenericSpecification;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,10 +22,8 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Service
 public class ProfessorService {
-	
 	@Autowired
 	private ProfessorRepository professorRepository;
-
 	@Autowired
 	private GenericSpecification<Professor> professorSpecification;
 
@@ -37,12 +36,8 @@ public class ProfessorService {
 		// Map to DTO
 		List<ProfessorDto> professorsDTO = professors.stream().map(ProfessorMapper.INSTANCE::toProfessorDto).collect(Collectors.toList());
 		
-		// Fetch supervising students
-		professorsDTO.forEach( professor -> {
-			List<StudentDto> students = professorRepository.fetchSupervisingStudents(professor.getProfessorId());
-			log.info("list of students: {]", Arrays.toString(students.toArray()));
-			professor.setListOfSupervisingStudents(students);
-		});
+		// Fetch supervising students && courses
+		professorsDTO.forEach(this::fetchStudentsAndCourses);
 		log.info("Professors (DTO) found: {}", Arrays.toString(professorsDTO.toArray()));
 		
 		return professorsDTO;
@@ -56,7 +51,7 @@ public class ProfessorService {
 			List<StudentDto> students = professorRepository.fetchSupervisingStudents(professor.getProfessorId());
 			log.info("Supervising students: {}", Arrays.toString(students.toArray()));
 			professor.setListOfSupervisingStudents(students);
-		} catch (NullPointerException ex) {}
+		} catch (NullPointerException ignored) {}
 		
 		return professor;
 	}
@@ -75,6 +70,17 @@ public class ProfessorService {
 		Professor updatedProfessor = ProfessorMapper.INSTANCE.toProfessor(professorDto);
 		professorRepository.save(updatedProfessor);
 		log.info("Professor updated: {}", updatedProfessor.toString());
+	}
+
+	private ProfessorDto fetchStudentsAndCourses(ProfessorDto professor) {
+		List<StudentDto> students = professorRepository.fetchSupervisingStudents(professor.getProfessorId());
+		log.info("list of students: {}", Arrays.toString(students.toArray()));
+		professor.setListOfSupervisingStudents(students);
+
+		List<TeachingCourseProjection> courses = professorRepository.fetchTeachingCourses(professor.getProfessorId());
+		log.info("list of courses: {}", Arrays.toString(courses.toArray()));
+		professor.setListOfCourses(courses);
+		return professor;
 	}
 
 }

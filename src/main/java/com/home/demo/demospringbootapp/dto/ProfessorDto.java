@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.UUID;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.home.demo.demospringbootapp.dto.projections.TeachingCourseProjection;
 import com.home.demo.demospringbootapp.models.Person;
 
 import lombok.AllArgsConstructor;
@@ -24,25 +25,22 @@ public class ProfessorDto extends Person{
 	private UUID professorId;
 	private String title;
 	private int numberOfTeachingCourses;
-	
-	//TODO
-//	private List<Course> listOfCourses;
-	
+	private List<TeachingCourseProjection> listOfCourses;
 	private List<StudentDto> listOfSupervisingStudents;
 	
-	public ProfessorDto(UUID professorId, String firstName, String lastName, LocalDate dateOfbirth, String title,
-			int numberOfTeachingCourses, List<StudentDto> listOfSupervisingStudents) {
-		super(firstName, lastName, dateOfbirth);
+	public ProfessorDto(UUID professorId, String firstName, String lastName, LocalDate dateOfBirth, String title,
+			int numberOfTeachingCourses, List<TeachingCourseProjection> listOfCourses,  List<StudentDto> listOfSupervisingStudents) {
+		super(firstName, lastName, dateOfBirth);
 		this.professorId = professorId;
 		this.title = title;
 		this.numberOfTeachingCourses = numberOfTeachingCourses;
-//		this.listOfCourses = listOfCourses;
+		this.listOfCourses = listOfCourses;
 		this.listOfSupervisingStudents = listOfSupervisingStudents;
 	}
 	
-	public ProfessorDto(UUID professorId, String firstName, String lastName, LocalDate dateOfbirth, String title,
+	public ProfessorDto(UUID professorId, String firstName, String lastName, LocalDate dateOfBirth, String title,
 			int numberOfTeachingCourses) {
-		super(firstName, lastName, dateOfbirth);
+		super(firstName, lastName, dateOfBirth);
 		this.professorId = professorId;
 		this.title = title;
 		this.numberOfTeachingCourses = numberOfTeachingCourses;

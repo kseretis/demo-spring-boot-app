@@ -20,6 +20,7 @@ public interface ProfessorMapper {
 
 	@Mapping(source = "teachingCourses", target = "numberOfTeachingCourses")
 	@Mapping(source = "students", target = "listOfSupervisingStudents")//, qualifiedByName = "mapStudents")
+	@Mapping(source = "courses", target = "listOfCourses")
 	ProfessorDto toProfessorDto(Professor professor);
 	
 	@InheritInverseConfiguration
