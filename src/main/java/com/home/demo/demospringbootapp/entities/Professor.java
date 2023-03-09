@@ -22,17 +22,14 @@ import lombok.*;
 @Entity
 @Table(name = "professors")
 public class Professor extends Person{
-
 	@Id
 	@GeneratedValue
 	private UUID professorId;
 	private String title;
 	private int teachingCourses;
-	
 	@Transient
 	@OneToMany(fetch = FetchType.LAZY)
 	private List<Student> students;
-	
 	@Transient
 	@OneToMany(fetch = FetchType.LAZY)
 	private List<Course> courses;

@@ -6,8 +6,8 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-import com.home.demo.demospringbootapp.dto.projections.SupervisingStudentProjection;
-import com.home.demo.demospringbootapp.dto.projections.TeachingCourseProjection;
+import com.home.demo.demospringbootapp.dto.SupervisingStudentDto;
+import com.home.demo.demospringbootapp.dto.TeachingCourseDto;
 import com.home.demo.demospringbootapp.specifications.GenericSpecification;
 import jakarta.transaction.Transactional;
 import org.jetbrains.annotations.NotNull;
@@ -29,31 +29,22 @@ public class ProfessorService {
 	private GenericSpecification<Professor> professorSpecification;
 
 	public List<ProfessorDto> getProfessors(Map<String, String> params){
-	
-		// Filter and find the professors		
+		// Filter and find the professors
 		List<Professor> professors = professorRepository.findAll(professorSpecification.specifyFilters(params));
 		log.info("Professors: {}", Arrays.toString(professors.toArray()));
-		
+
 		// Map to DTO
 		List<ProfessorDto> professorsDTO = professors.stream().map(ProfessorMapper.INSTANCE::toProfessorDto).collect(Collectors.toList());
-		
-		// Fetch supervising students && courses
 		professorsDTO.forEach(this::fetchStudentsAndCourses);
-		log.info("Professors (DTO) found: {}", Arrays.toString(professorsDTO.toArray()));
-		
+		log.info("Professors (DTO): {}", Arrays.toString(professorsDTO.toArray()));
+
 		return professorsDTO;
 	}
 
 	public ProfessorDto getProfessor(UUID id) {
 		ProfessorDto professor = ProfessorMapper.INSTANCE.toProfessorDto(professorRepository.findById(id).get());
-		log.info("Professor (DTO) found: {}", professor.toString());
-		
-		try {
-			List<SupervisingStudentProjection> students = professorRepository.fetchSupervisingStudents(professor.getProfessorId());
-			log.info("Supervising students: {}", Arrays.toString(students.toArray()));
-			professor.setListOfSupervisingStudents(students);
-		} catch (NullPointerException ignored) {}
-		
+		fetchStudentsAndCourses(professor);
+		log.info("Professor (DTO): {}", professor);
 		return professor;
 	}
 
@@ -65,9 +56,9 @@ public class ProfessorService {
 	}
 
 	@Transactional
-	public void updateProfessor(UUID id, ProfessorDto professorDto) {
+	public void updateProfessor(UUID id, @NotNull ProfessorDto professorDto) {
 		professorDto.setProfessorId(professorRepository.findById(id).get().getProfessorId());
-		log.info("Professor (DTO) found: {}", professorDto.toString());	
+		log.info("Professor (DTO) found: {}", professorDto.toString());
 		Professor updatedProfessor = ProfessorMapper.INSTANCE.toProfessor(professorDto);
 		professorRepository.save(updatedProfessor);
 		log.info("Professor updated: {}", updatedProfessor.toString());
@@ -75,15 +66,14 @@ public class ProfessorService {
 	}
 
 	@Transactional
-	private ProfessorDto fetchStudentsAndCourses(ProfessorDto professor) {
-		List<SupervisingStudentProjection> students = professorRepository.fetchSupervisingStudents(professor.getProfessorId());
+	private void fetchStudentsAndCourses(@NotNull ProfessorDto professor) {
+		List<SupervisingStudentDto> students = professorRepository.fetchSupervisingStudents(professor.getProfessorId());
 		log.info("list of students: {}", Arrays.toString(students.toArray()));
 		professor.setListOfSupervisingStudents(students);
 
-		List<TeachingCourseProjection> courses = professorRepository.fetchTeachingCourses(professor.getProfessorId());
+		List<TeachingCourseDto> courses = professorRepository.fetchTeachingCourses(professor.getProfessorId());
 		log.info("list of courses: {}", Arrays.toString(courses.toArray()));
 		professor.setListOfCourses(courses);
-		return professor;
 	}
 
 	@Transactional
