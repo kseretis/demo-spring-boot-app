@@ -1,0 +1,13 @@
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+
+demo-spring-boot-app
+.src
+target
+
+.gitignore
+HELP.md
+README.md

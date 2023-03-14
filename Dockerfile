@@ -1,4 +1,6 @@
-FROM openjdk:17-jdk-slim
-EXPOSE 8080
-COPY target/demo-spring-boot-app-0.0.1-SNAPSHOT.jar demo-spring-boot-app-0.0.1-SNAPSHOT.jar
-ENTRYPOINT [ "java", "-jar", "/demo-spring-boot-app-0.0.1-SNAPSHOT.jar" ]
+FROM eclipse-temurin:17-jdk-jammy
+RUN apt-get update && apt-get -y upgrade
+RUN apt-get install -y inotify-tools dos2unix
+ENV HOME=/app
+RUN mkdir -p $HOME
+WORKDIR $HOME

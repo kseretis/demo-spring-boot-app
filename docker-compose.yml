@@ -1,0 +1,30 @@
+version: "3.9"
+services:
+  db:
+    image: postgres:15.2-alpine
+    environment:
+      POSTGRES_USE: postgres
+      POSTGRES_PASSWORD: homeuserpass
+      POSTGRES_DB: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - db-data:/var/lib/postgresql/data
+  app:
+    build: .
+    command: sh docker-entrypoint.sh
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/postgres
+    depends_on:
+      - db
+    ports:
+      - "8080:8080"
+      - "35729:35729"
+      - "5005:5005"
+    volumes:
+      - ./:/app
+      - ./.m2:/root/.m2
+volumes:
+  db-data:
+
+
