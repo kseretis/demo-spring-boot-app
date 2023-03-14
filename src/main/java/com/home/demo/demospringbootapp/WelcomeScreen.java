@@ -6,8 +6,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class WelcomeScreen {
 
-	@GetMapping(value = "/")
+	@GetMapping(value = "/main")
 	public String getWelcomeScreen() {
-		return "Geia soy malaka!";
+		return "Kalws ta paidia!!!!!";
 	}
 }

@@ -1,5 +1,6 @@
 package com.home.demo.demospringbootapp.dto;
 
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.home.demo.demospringbootapp.enums.CourseStatus;
 
 import java.util.UUID;
@@ -11,8 +12,8 @@ import lombok.NoArgsConstructor;;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@JsonPropertyOrder({"courseId", "courseName", "status", "coveredSeats", "maxSeats", "professorId", "professorName"})
 public class CourseDto {
-	
 	private UUID courseId;
 	private String courseName;
 	private int coveredSeats;
@@ -23,12 +24,17 @@ public class CourseDto {
 	
 	public CourseDto(String courseName, int coveredSeats, int maxSeats, CourseStatus status, 
 				String professorName) {
-		super();
 		this.courseName = courseName;
 		this.coveredSeats = coveredSeats;
 		this.maxSeats = maxSeats;
 		this.status = status;
 		this.professorName = professorName;
+	}
+
+	public CourseDto(UUID courseId, String courseName, CourseStatus status) {
+		this.courseId = courseId;
+		this.courseName = courseName;
+		this.status = status;
 	}
 
 }

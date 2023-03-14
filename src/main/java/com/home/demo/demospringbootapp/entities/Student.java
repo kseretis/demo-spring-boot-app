@@ -21,7 +21,6 @@ import lombok.*;
 @Entity
 @Table(name = "students")
 public class Student extends Person{
-	
 	@Id
 	@GeneratedValue
 	private UUID studentId;
