@@ -1,0 +1,20 @@
+#application properties
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/my_db
+    username: postgres
+    password: homeuserpass
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    generate-ddl: true
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+  devtools:
+    livereload:
+      enabled: true
+    restart:
+      enabled: true
+logging:
+  level:
+    root: debug

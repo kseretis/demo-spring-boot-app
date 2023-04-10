@@ -1,2 +1,4 @@
 # demo-spring-boot-app
-Bulding a RESTful API using Spring.
+A dummy demo RESTful API.
+
+Install docker and run in the terminal `docker-compose up --build`.
