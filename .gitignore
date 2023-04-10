@@ -31,3 +31,6 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### Useless files ###
+src/main/resources/db/dump-postgres-202304101701.sql

@@ -2,19 +2,21 @@ version: "3.9"
 services:
   db:
     image: postgres:15.2-alpine
+    restart: always
     environment:
       POSTGRES_USE: postgres
       POSTGRES_PASSWORD: homeuserpass
-      POSTGRES_DB: postgres
+      POSTGRES_DB: my_db
     ports:
       - "5432:5432"
     volumes:
       - db-data:/var/lib/postgresql/data
+      - ./src/main/resources/db/dump-db-data-v1.sql:/docker-entrypoint-initdb.d/dummy_dump.sql
   app:
     build: .
     command: sh docker-entrypoint.sh
     environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/postgres
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/my_db
     depends_on:
       - db
     ports:
