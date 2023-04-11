@@ -1,7 +1,7 @@
 version: "3.9"
 services:
   db:
-    image: postgres:15.2-alpine
+    image: postgres
     restart: always
     environment:
       POSTGRES_USE: postgres
@@ -11,7 +11,7 @@ services:
       - "5432:5432"
     volumes:
       - db-data:/var/lib/postgresql/data
-      - ./src/main/resources/db/dump-db-data-v1.sql:/docker-entrypoint-initdb.d/dummy_dump.sql
+      - ./src/main/resources/db/init-db.sql:/docker-entrypoint-initdb.d/init-db.sql
   app:
     build: .
     command: sh docker-entrypoint.sh

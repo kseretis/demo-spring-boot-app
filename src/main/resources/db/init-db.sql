@@ -1,14 +1,23 @@
+-- This part is necessery if the database name is not declared in the docker-compose.yml
+-- From here
+-- Create user
+--CREATE USER admin;
 
---create types
+-- Check if the database exists before creating it
+--SELECT 'CREATE DATABASE my_db' WHERE NOT EXISTS (SELECT FROM pg_database WHERE datname = 'my_db');
 
+--Grant all privileges to the user admin
+--GRANT ALL PRIVILEGES ON DATABASE my_db TO admin;
+-- To here
+
+-- Create types
 CREATE TYPE public.course_status AS ENUM (
     'FULL',
     'AVAILABLE'
 );
 
---create tables
-
-CREATE TABLE public.students (
+-- Create tables
+CREATE TABLE IF NOT EXISTS public.students (
     student_id uuid NOT NULL,
     first_name character varying(255) NOT NULL,
     last_name character varying(255) NOT NULL,
@@ -19,7 +28,7 @@ CREATE TABLE public.students (
     full_name character varying(255)
 );
 
-CREATE TABLE public.professors (
+CREATE TABLE IF NOT EXISTS public.professors (
     professor_id uuid NOT NULL,
     first_name character varying(255) NOT NULL,
     last_name character varying(255) NOT NULL,
@@ -29,12 +38,12 @@ CREATE TABLE public.professors (
     full_name character varying(255)
 );
 
-CREATE TABLE public.professors_students (
+CREATE TABLE IF NOT EXISTS public.professors_students (
     professor_professor_id uuid NOT NULL,
     students_student_id uuid NOT NULL
 );
 
-CREATE TABLE public.courses (
+CREATE TABLE IF NOT EXISTS public.courses (
     course_id uuid NOT NULL,
     course_name character varying(255) NOT NULL,
     covered_seats integer NOT NULL,
@@ -43,7 +52,7 @@ CREATE TABLE public.courses (
     status character varying(20) DEFAULT 'AVAILABLE'::public.course_status NOT NULL
 );
 
-CREATE TABLE public.course_seats (
+CREATE TABLE IF NOT EXISTS public.course_seats (
     id integer NOT NULL,
     course_name character varying(255) NOT NULL,
     course_id uuid NOT NULL,
@@ -53,7 +62,7 @@ CREATE TABLE public.course_seats (
     student_id uuid NOT NULL
 );
 
-CREATE TABLE public.supervising (
+CREATE TABLE IF NOT EXISTS public.supervising (
     id integer NOT NULL,
     supervisor_first_name character varying(255) NOT NULL,
     supervisor_last_name character varying(255) NOT NULL,
@@ -63,13 +72,12 @@ CREATE TABLE public.supervising (
     student_id uuid NOT NULL
 );
 
-CREATE TABLE public.professors_courses (
+CREATE TABLE IF NOT EXISTS public.professors_courses (
     professor_professor_id uuid NOT NULL,
     courses_course_id uuid NOT NULL
 );
 
---create sequences
-
+-- Create sequences
 CREATE SEQUENCE public.course_seats_id_seq
     AS integer
     START WITH 1
