@@ -1,40 +1,23 @@
 package com.home.demo.demospringbootapp.config;
 
-import com.home.demo.demospringbootapp.UserDaoTemp;
-import com.home.demo.demospringbootapp.auth.JwtAuthenticationFilter;
+import com.home.demo.demospringbootapp.auth.AuthenticationFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
-import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
-import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.NoOpPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.security.web.authentication.logout.LogoutHandler;
 
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
 public class SecurityConfiguration {
 
-  private static final String[] SECURED_ENDPOINTS = {"/api/v1/auth/**"};
-  public static final String[] ENDPOINTS = {"/api/v1/home/**"};
-
-  private final JwtAuthenticationFilter jwtAuthFilter;
-//  private final AuthenticationProvider authenticationProvider;
-  private final UserDaoTemp userDao;
+  private final AuthenticationFilter jwtAuthFilter;
+  private final AuthenticationProvider authenticationProvider;
 
   @Bean
   public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -42,59 +25,21 @@ public class SecurityConfiguration {
             .csrf()
             .disable()
             .authorizeHttpRequests()
-            .requestMatchers(SECURED_ENDPOINTS)
-              .permitAll()
+            .requestMatchers(ApplicationConfigs.SECURED_ENDPOINTS)
+            .permitAll()
             .anyRequest()
-              .authenticated()
+            .authenticated()
             .and()
-              .sessionManagement()
-              .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+            .sessionManagement()
+            .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             .and()
-            .authenticationProvider(authenticationProvider())
-            .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class).build();
+            .authenticationProvider(authenticationProvider)
+            .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
+            .build();
     //        .logout()
     //        .logoutUrl("/api/v1/auth/logout")
     //        .addLogoutHandler(logoutHandler)
     //        .logoutSuccessHandler((request, response, authentication) -> SecurityContextHolder.clearContext())
-  }
-
-//  TODO update user details
-  @Bean
-  public UserDetailsService userDetailsService() {
-//    return username -> repository.findByEmail(username)
-//            .orElseThrow(() -> new UsernameNotFoundException("User not found"));
-    return new UserDetailsService() {
-      @Override
-      public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        return userDao.findUserByEmail(email);
-      }
-    };
-  }
-
-  @Bean
-  public AuthenticationProvider authenticationProvider() {
-    final DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
-    authProvider.setUserDetailsService(userDetailsService());
-    authProvider.setPasswordEncoder(passwordEncoder());
-    return authProvider;
-  }
-
-  @Bean
-  public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
-    return config.getAuthenticationManager();
-  }
-
-//  TODO update encoder
-  @Bean
-  public PasswordEncoder passwordEncoder() {
-    return NoOpPasswordEncoder.getInstance();
-//    TODO replace the no-encoded-password with the BCrypt
-//    return new BCryptPasswordEncoder();
-  }
-
-  @Bean
-  public WebSecurityCustomizer webSecurityCustomizer() {
-    return (web) -> web.ignoring().requestMatchers(ENDPOINTS);
   }
 
 }
