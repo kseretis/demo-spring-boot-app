@@ -20,11 +20,9 @@ public class Course {
 	private String courseName;
 	private int coveredSeats;
 	private int maxSeats;
-
 	@Enumerated(EnumType.STRING)
 	@Column(name = "status")
 	private CourseStatus status;
-
 	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "professor_id", referencedColumnName = "professorId")
 	private Professor professor;

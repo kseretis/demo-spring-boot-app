@@ -19,7 +19,6 @@ import java.util.function.Function;
 public class JwtUtils {
 
     public static final String BEARER = "Bearer ";
-
     @Value("${application.security.jwt.secret-key}")
     private String secretKey;
     @Value("${application.security.jwt.expiration}")

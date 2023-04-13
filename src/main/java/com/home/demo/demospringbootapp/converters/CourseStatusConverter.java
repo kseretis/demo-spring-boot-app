@@ -17,5 +17,6 @@ public class CourseStatusConverter implements AttributeConverter<CourseStatus, S
     public CourseStatus convertToEntityAttribute(@NotNull String dbData) {
         return CourseStatus.valueOf(dbData.toUpperCase());
     }
+
 }
 

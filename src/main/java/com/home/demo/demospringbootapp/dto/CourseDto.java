@@ -14,6 +14,7 @@ import lombok.NoArgsConstructor;;
 @AllArgsConstructor
 @JsonPropertyOrder({"courseId", "courseName", "status", "coveredSeats", "maxSeats", "professorId", "professorName"})
 public class CourseDto {
+
 	private UUID courseId;
 	private String courseName;
 	private int coveredSeats;

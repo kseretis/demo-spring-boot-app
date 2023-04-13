@@ -10,6 +10,7 @@ import com.home.demo.demospringbootapp.entities.Professor;
 
 @Mapper(componentModel = "spring")
 public interface ProfessorMapper {
+
 	ProfessorMapper INSTANCE = Mappers.getMapper(ProfessorMapper.class);
 
 	@Mapping(source = "teachingCourses", target = "numberOfTeachingCourses")

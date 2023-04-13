@@ -24,6 +24,7 @@ import lombok.ToString;
 @JsonIgnoreProperties("fullName")
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class StudentDto extends Person{
+
 	private UUID studentId;
 	private int classYear;
 	private double grade;

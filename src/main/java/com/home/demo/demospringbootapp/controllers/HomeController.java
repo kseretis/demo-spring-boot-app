@@ -13,4 +13,5 @@ public class HomeController {
     public ResponseEntity<String> home(){
         return ResponseEntity.ok("Hello without a token!");
     }
+
 }

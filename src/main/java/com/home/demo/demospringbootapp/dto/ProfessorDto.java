@@ -25,6 +25,7 @@ import lombok.ToString;
 @JsonIgnoreProperties("fullName")
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class ProfessorDto extends Person{
+
 	private UUID professorId;
 	private String title;
 	private int numberOfTeachingCourses;

@@ -30,35 +30,28 @@ public class AuthenticationService {
     public RegisterResponse register(RegisterRequest request) {
 
         User user = User.builder()
-                .username(request.getUsername())
-                .firstname(request.getFirstname())
-                .lastname(request.getLastname())
+                .username(request.username())
+                .firstname(request.firstname())
+                .lastname(request.lastname())
                 .role(Role.USER)
-                .password(passwordEncoder.encode(request.getPassword()))
+                .password(passwordEncoder.encode(request.password()))
                 .build();
 
         userRepository.save(user);
         userRepository.findByUsername(user.getUsername()).orElseThrow();
 
-        return RegisterResponse.builder()
-                .username(user.getUsername())
-                .message(RegisterResponse.OK)
-                .token(jwtUtils.generateToken(user))
-                .timestamp(ZonedDateTime.now())
-                .build();
+        return new RegisterResponse(
+                user.getUsername(), RegisterResponse.OK, jwtUtils.generateToken(user), ZonedDateTime.now());
     }
 
     public AuthenticationResponse authenticate(AuthenticationRequest request) {
         authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword()));
+                new UsernamePasswordAuthenticationToken(request.username(), request.password()));
 
-        User user = userRepository.findByUsername(request.getUsername()).orElseThrow();
+        User user = userRepository.findByUsername(request.username()).orElseThrow();
         log.info("***!!!*** - User {} found and authenticated!", user.getUsername());
 
-        return AuthenticationResponse.builder()
-                        .token(jwtUtils.generateToken(user))
-                        .status(AuthenticationResponse.OK)
-                        .build();
+        return new AuthenticationResponse(jwtUtils.generateToken(user),AuthenticationResponse.OK);
     }
 
 }

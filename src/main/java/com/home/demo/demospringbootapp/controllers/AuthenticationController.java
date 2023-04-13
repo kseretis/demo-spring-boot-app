@@ -29,11 +29,11 @@ public class AuthenticationController {
 
   @PostMapping("/authenticate")
   public ResponseEntity<AuthenticationResponse> authenticate(@RequestBody AuthenticationRequest request) {
-    log.info("***!!!*** - Authentication in progress for user: {}", request.getUsername());
+    log.info("***!!!*** - Authentication in progress for user: {}", request.username());
     try {
       return ResponseEntity.ok(authenticationService.authenticate(request));
     } catch (Exception ex) {
-      return ResponseEntity.status(400).body(AuthenticationResponse.builder().status(AuthenticationResponse.ERROR).build());
+      return ResponseEntity.status(400).body(new AuthenticationResponse(null, AuthenticationResponse.ERROR));
     }
   }
 

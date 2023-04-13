@@ -22,6 +22,7 @@ import lombok.*;
 @Entity
 @Table(name = "professors")
 public class Professor extends Person{
+
 	@Id
 	@GeneratedValue
 	private UUID professorId;
