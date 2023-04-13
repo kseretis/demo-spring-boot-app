@@ -1,4 +1,4 @@
-package com.home.demo.demospringbootapp.dto;
+package com.home.demo.demospringbootapp.dto.auth;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

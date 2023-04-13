@@ -3,6 +3,7 @@ package com.home.demo.demospringbootapp.entities;
 import com.home.demo.demospringbootapp.enums.Role;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.id.IncrementGenerator;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -21,6 +22,7 @@ import java.util.List;
 @Table(name = "users")
 public class User implements UserDetails {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private String username;
     private String firstname;

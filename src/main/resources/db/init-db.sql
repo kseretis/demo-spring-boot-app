@@ -10,13 +10,34 @@
 --GRANT ALL PRIVILEGES ON DATABASE my_db TO admin;
 -- To here
 
+-- Create needed extensions
+CREATE EXTENSION IF NOT EXISTS pgcrypto WITH SCHEMA public;
+CREATE EXTENSION IF NOT EXISTS "uuid-ossp" WITH SCHEMA public;
+
 -- Create types
 CREATE TYPE public.course_status AS ENUM (
     'FULL',
     'AVAILABLE'
 );
 
+CREATE TYPE public.user_role AS ENUM (
+    'ADMIN',
+    'USER'
+);
+
+-- Must have cast, for ENUM Java types to be stored in postgreSQL table
+CREATE CAST (character varying AS public.user_role) WITH INOUT AS ASSIGNMENT;
+
 -- Create tables
+CREATE TABLE IF NOT EXISTS public.users (
+    id integer NOT NULL,
+    username character varying(64) NOT NULL,
+    firstname character varying(64) NOT NULL,
+    lastname character varying(64) NOT NULL,
+    password character varying NOT NULL,
+    role public.user_role DEFAULT 'USER'::public.user_role NOT NULL
+);
+
 CREATE TABLE IF NOT EXISTS public.students (
     student_id uuid NOT NULL,
     first_name character varying(255) NOT NULL,
@@ -78,6 +99,21 @@ CREATE TABLE IF NOT EXISTS public.professors_courses (
 );
 
 -- Create sequences
+CREATE SEQUENCE public.users_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+CREATE SEQUENCE public.users_seq
+    START WITH 1
+    INCREMENT BY 50
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
 CREATE SEQUENCE public.course_seats_id_seq
     AS integer
     START WITH 1
@@ -162,6 +198,9 @@ ALTER TABLE ONLY public.course_seats
     ADD CONSTRAINT fl_student FOREIGN KEY (student_id) REFERENCES public.students(student_id);
 
 --insert values
+INSERT INTO public.users
+VALUES
+    (1,	'admin', 'admin', 'TheAdmin', '$2a$06$8g4dV96VIGTcxakqeCv3XueM7DbyfIJGXdZcSG3GnkkAUy8zKZe86', 'ADMIN');
 
 INSERT INTO public.professors
 VALUES
