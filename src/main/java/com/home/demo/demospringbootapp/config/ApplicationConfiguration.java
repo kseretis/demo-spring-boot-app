@@ -1,5 +1,7 @@
 package com.home.demo.demospringbootapp.config;
 
+import com.home.demo.demospringbootapp.content.ApplicationEndpoints;
+import com.home.demo.demospringbootapp.content.Messages;
 import com.home.demo.demospringbootapp.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -23,7 +25,7 @@ public class ApplicationConfiguration {
     @Bean
     public UserDetailsService userDetailsService() {
         return username -> userRepository.findByUsername(username)
-                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+                .orElseThrow(() -> new UsernameNotFoundException(Messages.USER_NOT_FOUND));
     }
 
     @Bean
@@ -46,7 +48,7 @@ public class ApplicationConfiguration {
 
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
-        return (web) -> web.ignoring().requestMatchers(ApplicationConfigs.ENDPOINTS);
+        return (web) -> web.ignoring().requestMatchers(ApplicationEndpoints.ENDPOINTS);
     }
 
 }

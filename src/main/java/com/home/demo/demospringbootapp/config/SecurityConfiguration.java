@@ -1,6 +1,7 @@
 package com.home.demo.demospringbootapp.config;
 
 import com.home.demo.demospringbootapp.auth.AuthenticationFilter;
+import com.home.demo.demospringbootapp.content.ApplicationEndpoints;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -25,7 +26,7 @@ public class SecurityConfiguration {
             .csrf()
             .disable()
             .authorizeHttpRequests()
-            .requestMatchers(ApplicationConfigs.SECURED_ENDPOINTS)
+            .requestMatchers(ApplicationEndpoints.SECURED_ENDPOINTS)
             .permitAll()
             .anyRequest()
             .authenticated()
