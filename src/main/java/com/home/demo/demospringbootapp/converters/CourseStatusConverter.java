@@ -1,6 +1,6 @@
 package com.home.demo.demospringbootapp.converters;
 
-import com.home.demo.demospringbootapp.enums.CourseStatus;
+import com.home.demo.demospringbootapp.course.CourseStatus;
 import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;
 import org.jetbrains.annotations.NotNull;

@@ -1,7 +1,7 @@
 package com.home.demo.demospringbootapp.auth;
 
-import com.home.demo.demospringbootapp.entities.User;
-import com.home.demo.demospringbootapp.repositories.UserRepository;
+import com.home.demo.demospringbootapp.user.User;
+import com.home.demo.demospringbootapp.user.UserRepository;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

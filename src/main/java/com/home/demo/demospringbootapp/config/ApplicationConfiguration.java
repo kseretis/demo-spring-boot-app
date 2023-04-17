@@ -2,7 +2,7 @@ package com.home.demo.demospringbootapp.config;
 
 import com.home.demo.demospringbootapp.content.ApplicationEndpoints;
 import com.home.demo.demospringbootapp.content.Messages;
-import com.home.demo.demospringbootapp.repositories.UserRepository;
+import com.home.demo.demospringbootapp.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
