@@ -32,5 +32,9 @@ build/
 ### VS Code ###
 .vscode/
 
-### Useless files ###
+### Docker files ###
+.m2
+
+### Offline files ###
 src/main/resources/db/dump-postgres-202304101701.sql
+src/main/resources/jwt-secret-key.yml

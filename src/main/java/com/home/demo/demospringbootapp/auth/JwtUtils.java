@@ -6,6 +6,8 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.annotation.PropertySources;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
@@ -16,10 +18,14 @@ import java.util.Map;
 import java.util.function.Function;
 
 @Service
+@PropertySources({
+        @PropertySource(value = "file:/src/main/resources/key-values.yml"),
+        @PropertySource(value = "file:/src/main/resources/jwt-secret-key.yml")
+})
 public class JwtUtils {
 
     public static final String BEARER = "Bearer ";
-    @Value("${application.security.jwt.secret-key}")
+    @Value("${offline.security.jwt.secret-key}")
     private String secretKey;
     @Value("${application.security.jwt.expiration}")
     private long jwtExpiration;
