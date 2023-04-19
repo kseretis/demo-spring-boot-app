@@ -15,7 +15,6 @@ spring:
       enabled: true
     restart:
       enabled: true
-
 logging:
   level:
     root: debug

@@ -1,26 +1,41 @@
 package com.home.demo.demospringbootapp.professor;
 
-import org.mapstruct.InheritInverseConfiguration;
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
+import com.home.demo.demospringbootapp.course.Course;
+import com.home.demo.demospringbootapp.course.CourseDto;
+import com.home.demo.demospringbootapp.course.CourseMapper;
+import com.home.demo.demospringbootapp.student.Student;
+import com.home.demo.demospringbootapp.student.StudentDto;
+import com.home.demo.demospringbootapp.student.StudentMapper;
+import com.home.demo.demospringbootapp.student.SupervisingStudentDto;
+import org.mapstruct.*;
 import org.mapstruct.factory.Mappers;
+import org.springframework.beans.factory.annotation.Qualifier;
 
-@Mapper(componentModel = "spring")
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.util.List;
+
+@Mapper(componentModel = "spring", builder = @Builder(disableBuilder = true))
 public interface ProfessorMapper {
 
 	ProfessorMapper INSTANCE = Mappers.getMapper(ProfessorMapper.class);
 
 	@Mapping(source = "teachingCourses", target = "numberOfTeachingCourses")
-	@Mapping(source = "students", target = "listOfSupervisingStudents")//, qualifiedByName = "mapStudents")
+	@Mapping(source = "students", target = "listOfSupervisingStudents" )
 	@Mapping(source = "courses", target = "listOfCourses")
 	ProfessorDto toProfessorDto(Professor professor);
 	
 	@InheritInverseConfiguration
 	Professor toProfessor(ProfessorDto professorDto);
 
-//	@Named("mapStudents")
-//	default List<StudentDto> mapStudents(List<Student> students) {
-//		return StudentMapper.INSTANCE.toStudentDtoList(students);
+//	@ProfessorMapperNamed
+//	static List<SupervisingStudentDto> mapStudents(List<Student> students) {
+//		return null; //StudentMapper.INSTANCE.toStudentDtoList(students);
+//	}
+
+//	@Named(value = "mapCourses")
+//	default List<CourseDto> mapCourses(List<Course> courses) {
+//		return CourseMapper.INSTANCE.toCourseDtoList(courses);
 //	}
 	
 }

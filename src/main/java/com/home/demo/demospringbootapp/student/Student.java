@@ -6,9 +6,11 @@ import com.home.demo.demospringbootapp.models.Person;
 import com.home.demo.demospringbootapp.professor.Professor;
 import jakarta.persistence.*;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 @Getter
 @Setter
+@SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
@@ -32,5 +34,12 @@ public class Student extends Person{
 		this.classYear = classYear;
 		this.grade = grade;
 	}
-	
+
+	public Professor getSupervisor() {
+		return supervisor;
+	}
+
+	public void setSupervisor(Professor supervisor) {
+		this.supervisor = supervisor;
+	}
 }

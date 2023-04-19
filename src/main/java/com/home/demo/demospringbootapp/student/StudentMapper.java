@@ -2,21 +2,19 @@ package com.home.demo.demospringbootapp.student;
 
 import java.util.List;
 
-import org.mapstruct.InheritInverseConfiguration;
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.mapstruct.Named;
+import org.mapstruct.*;
 import org.mapstruct.factory.Mappers;
 
 import com.home.demo.demospringbootapp.professor.Professor;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", builder = @Builder(disableBuilder = true))
 public interface StudentMapper {
 
 	StudentMapper INSTANCE = Mappers.getMapper(StudentMapper.class);
 	
 	@Mapping(source = "supervisor.professorId", target = "supervisorId")
-	@Mapping(source = "supervisor", target = "supervisorName", qualifiedByName = "setFullName")
+	@Mapping(source = "supervisor", target = "supervisorName", qualifiedByName = "setFullName" )
+//			qualifiedByName = "setFullName")
 	StudentDto toStudentDto(Student student);
 	
 	@InheritInverseConfiguration

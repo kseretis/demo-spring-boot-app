@@ -5,19 +5,20 @@ import java.util.stream.Collectors;
 
 import com.home.demo.demospringbootapp.specifications.GenericSpecification;
 import jakarta.transaction.Transactional;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Service;
 import lombok.extern.slf4j.Slf4j;
 
+import javax.swing.text.html.Option;
+
 @Slf4j
 @Service
+@RequiredArgsConstructor
 public class StudentService {
-	
-	@Autowired
-	private StudentRepository studentRepository;
 
-	@Autowired
-	private GenericSpecification<Student> studentSpecification;
+	private final StudentRepository studentRepository;
+	private final GenericSpecification<Student> studentSpecification;
 
 	public List<StudentDto> getStudents(Map<String, String> params) {
 		
@@ -40,11 +41,12 @@ public class StudentService {
 	}
 	
 	public StudentDto getStudent(UUID id) {
-		return StudentMapper.INSTANCE.toStudentDto(studentRepository.findById(id).get());
+		Optional<Student> student = studentRepository.findById(id);
+		return student.map(StudentMapper.INSTANCE::toStudentDto).orElseThrow();
 	}
 
 	@Transactional
-	public void addStudent(StudentDto studentDto) {
+	public void addStudent(@NotNull StudentDto studentDto) {
 		if (studentDto.getSupervisorId() != null) {
 			studentDto.updateSupervisorInfo(studentRepository
 					.fetchProfessor(studentDto.getStudentId()));
@@ -57,7 +59,7 @@ public class StudentService {
 	}
 
 	@Transactional
-	public void updateStudent(UUID id, StudentDto studentDto) {
+	public void updateStudent(UUID id, @NotNull StudentDto studentDto) {
 		studentDto.setStudentId( studentRepository.findById(id).get().getStudentId());
 		log.info("Student (DTO) found: {}", studentDto.toString());
 		Student updatedStudent = StudentMapper.INSTANCE.toStudent(studentDto);
