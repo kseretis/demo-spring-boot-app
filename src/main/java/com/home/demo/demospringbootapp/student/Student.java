@@ -42,4 +42,5 @@ public class Student extends Person{
 	public void setSupervisor(Professor supervisor) {
 		this.supervisor = supervisor;
 	}
+
 }
